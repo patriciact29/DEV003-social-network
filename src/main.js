@@ -1,5 +1,12 @@
-// Este es el punto de entrada de tu aplicacion
+import { app as firebase } from './firebase-config.js';
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'firebase/auth';
 
-import { myFunction } from './lib/index.js';
+const auth = getAuth(firebase);
+const googleAuthProvider = new GoogleAuthProvider();
 
-myFunction();
+const loginBtn = document.querySelector('#google-login');
+
+loginBtn.addEventListener('click', () => {
+  signInWithPopup(auth, googleAuthProvider)
+    .then(auth => console.log(auth));
+});
