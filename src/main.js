@@ -1,10 +1,7 @@
-// import { login } from './auth.js';
 import { Welcome } from './components/Welcome.js';
 import { Login } from './components/Login.js';
 import { Signup } from './components/Signup.js';
 
-/* const loginBtn = document.querySelector('#google-login');
-loginBtn.addEventListener('click', login); */
 // ruteado
 const root = document.getElementById('root');
 const routes = {
@@ -12,6 +9,7 @@ const routes = {
   '/login': Login,
   '/signup': Signup,
 };
+
 export const onNavigate = (pathname) => {
   window.history.pushState(
     {},
@@ -21,6 +19,12 @@ export const onNavigate = (pathname) => {
   root.removeChild(root.firstChild);
   root.appendChild(routes[pathname]());
 };
+
 const component = routes[window.location.pathname];
+
+window.onpopstate = () => {
+  root.removeChild(root.firstChild);
+  root.append(component());
+};
 
 root.appendChild(component());
