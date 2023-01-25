@@ -1,5 +1,5 @@
 import {
-  getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged,
+  getAuth, signInWithPopup, GoogleAuthProvider,
 } from 'firebase/auth';
 import { app as firebase } from './firebase-config.js';
 
