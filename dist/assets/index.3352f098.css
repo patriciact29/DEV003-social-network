@@ -7,7 +7,7 @@
 
 body{
     min-height: 100vh;
-    background-image: linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(./media/background-1.jpg);
+    background-image: linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(/assets/background-1.49858dab.jpg);
     background-size: cover;
 }
 
@@ -57,7 +57,7 @@ body{
     margin: 5rem;
     width: 20rem;
     height: 100%;
-    background-image: url(./media/logo-blanco-fems-viajando-juntas.png);
+    background-image: url(/assets/logo-blanco-fems-viajando-juntas.bc76852b.png);
 }
 
 .container button img{

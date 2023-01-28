@@ -1,19 +1,18 @@
-import { onNavigate } from '../main.js';
-import { login } from '../auth.js';
+import { loginWithGoogle } from '../auth.js';
 
-export const Welcome = () => {
+export const Welcome = (onNavigate) => {
   const div = document.createElement('div');
-  const logo = document.createElement('img');
+  const logo = document.createElement('div');
   const buttonLogin = document.createElement('button');
   const buttonRegister = document.createElement('button');
   const buttonGoogle = document.createElement('button');
 
-  logo.setAttribute('src', '../media/logo-blanco-fems-viajando-juntas.png');
   div.setAttribute('class', 'container');
+  logo.setAttribute('class', 'logo');
   buttonLogin.textContent = 'Iniciar sesión';
   buttonRegister.textContent = 'Crear cuenta';
   buttonGoogle.textContent = 'Continuar con Google';
-  buttonGoogle.addEventListener('click', login);
+  buttonGoogle.addEventListener('click', loginWithGoogle);
 
   buttonLogin.addEventListener('click', () => {
     onNavigate('/login');
@@ -22,7 +21,7 @@ export const Welcome = () => {
   buttonRegister.addEventListener('click', () => {
     onNavigate('/signup');
   });
-  
+
   div.append(logo, buttonLogin, buttonRegister, buttonGoogle);
 
   return div;
