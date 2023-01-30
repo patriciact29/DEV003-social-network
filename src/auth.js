@@ -11,7 +11,7 @@ import {
 import { app as firebase } from './firebase-config.js';
 // import { onNavigate } from './main.js';
 
-const auth = getAuth(firebase);
+export const auth = getAuth(firebase);
 auth.languageCode = 'es';
 
 export function loginWithGoogle() {
