@@ -1,3 +1,4 @@
+// import { sortUserPlugins } from 'vite';
 import { loginWithEmail } from '../auth.js';
 
 export const Login = (onNavigate) => {
@@ -36,8 +37,14 @@ export const Login = (onNavigate) => {
     const password = inputPassword.value;
     // console.log(email, password);
     loginWithEmail(email, password)
-      .then(() => {
-        onNavigate('/home');
+      .then((result) => {
+        const user = result.user;
+        if (user.emailVerified === false) {
+          alert('Email no verificado, se le envió un correo de verificación');
+        } else {
+          console.log('verificado');
+          onNavigate('/home');
+        }
       })
       .catch((error) => {
         console.log(error.code);
@@ -45,7 +52,13 @@ export const Login = (onNavigate) => {
         alert(error.message);
       });
   });
-
+  // if (user.emailVerified === false) {
+  //   textoverificado = 'Email no verificado';
+  //   console.log(textoverificado);
+  // }
+  // else {
+  //   textoverificado = "Email verificado";
+  // }
   form.append(title, labelEmail, inputEmail, labelPassword, inputPassword, buttonLogin);
   return form;
 };

@@ -5,6 +5,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  sendEmailVerification,
   // updateProfile,
   // onAuthStateChanged,
 } from 'firebase/auth';
@@ -17,6 +18,10 @@ auth.languageCode = 'es';
 export function loginWithGoogle() {
   const provider = new GoogleAuthProvider();
   return signInWithPopup(auth, provider);
+}
+
+export function verifyEmail() {
+  return sendEmailVerification(auth.currentUser);
 }
 
 export function logout() {
