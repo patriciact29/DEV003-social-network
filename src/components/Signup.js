@@ -50,7 +50,8 @@ export const Signup = (onNavigate) => {
     const password = inputPassword.value;
     registerNewUser(email, password)
       .then(() => {
-        onNavigate('/home');
+        alert('verifica tu correo e inicia sesión')
+        onNavigate('/login');
       })
       .catch((error) => {
         console.log(error.code);

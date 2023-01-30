@@ -19,16 +19,30 @@ export const Welcome = (onNavigate) => {
     onNavigate('/signup');
   });
   buttonGoogle.textContent = 'Continuar con Google';
-  buttonGoogle.addEventListener('click', async () => {
-    try {
-      const result = await loginWithGoogle();
-      const user = result.user;
-      console.log(`usuario ${user.displayName} esta logueado y su foto de perfil es ${user.photoURL}`);
-      // onNavigate('./home');
-    } catch (error) {
-      alert(error);
-    }
+  buttonGoogle.addEventListener('click', () => {
+    loginWithGoogle()
+      .then(() => {
+      // const user = result.user; // para usar result sería .then((result) => {})
+      // console.log(`usuario ${user.displayName} esta logueado y su foto de perfil es ${user.photoURL}`);
+        onNavigate('/home');
+      })
+      .catch((error) => {
+        console.log(error.code);
+        console.log(error.message);
+        alert(error.message);
+      });
   });
+
+  // buttonGoogle.addEventListener('click', async () => {
+  //   try {
+  //     const result = await loginWithGoogle();
+  //     const user = result.user;
+  //     console.log(`usuario ${user.displayName} esta logueado y su foto de perfil es ${user.photoURL}`);
+  //     // onNavigate('./home');
+  //   } catch (error) {
+  //     alert(error);
+  //   }
+  // });
 
   div.append(logo, buttonLogin, buttonSignup, buttonGoogle);
   return div;
