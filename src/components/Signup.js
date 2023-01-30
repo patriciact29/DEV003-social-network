@@ -1,4 +1,4 @@
-import { registerNewUser } from '../auth.js';
+import { registerNewUser, verifyEmail } from '../auth.js';
 
 export const Signup = (onNavigate) => {
   const title = document.createElement('h2');
@@ -49,15 +49,26 @@ export const Signup = (onNavigate) => {
     const email = inputEmail.value;
     const password = inputPassword.value;
     registerNewUser(email, password)
-      .then(() => {
-        alert('verifica tu correo e inicia sesión')
-        onNavigate('/login');
-      })
       .catch((error) => {
-        console.log(error.code);
-        console.log(error.message);
+      // console.log(error.code);
+      // console.log(error.message);
         alert(error.message);
+      })
+      .then(() => {
+        alert('Verifica tu correo e inicia sesión.');
+        verifyEmail();
+        onNavigate('/login');
+        // const user = result.user;
+        // let textoverificado = "";
       });
+
+    // if (user.emailVerified === false) {
+    //   textoverificado = 'Email no verificado';
+    //   console.log(textoverificado);
+    // }
+    // else {
+    //   textoverificado = "Email verificado";
+    // }
   });
 
   form.append(
