@@ -10,7 +10,7 @@ const firebaseConfig = {
   projectId: 'social-network-fems',
   storageBucket: 'social-network-fems.appspot.com',
   messagingSenderId: '912113826048',
-  appId: '1:912113826048:web:291047e64c56fd1b871be5'
+  appId: '1:912113826048:web:291047e64c56fd1b871be5',
 };
 
 // Initialize Firebase

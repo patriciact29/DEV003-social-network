@@ -1,12 +1,13 @@
 export const Signup = (onNavigate) => {
+  const title = document.createElement('h2');
   const form = document.createElement('form');
   const button = document.createElement('button');
   const labelUser = document.createElement('label');
   const inputUser = document.createElement('input');
   const labelName = document.createElement('label');
   const inputName = document.createElement('input');
-  const labelCountry = document.createElement('label');
-  const selectCountry = document.createElement('select');
+  // const labelCountry = document.createElement('label');
+  // const selectCountry = document.createElement('select');
   const labelEmail = document.createElement('label');
   const inputEmail = document.createElement('input');
   const labelPassword = document.createElement('label');
@@ -19,8 +20,8 @@ export const Signup = (onNavigate) => {
   inputName.setAttribute('placeholder', 'Nombre Apellido');
   inputName.setAttribute('name', 'name');
   labelName.setAttribute('for', 'name');
-  selectCountry.setAttribute('name', 'country');
-  labelCountry.setAttribute('for', 'country');
+  // selectCountry.setAttribute('name', 'country');
+  // labelCountry.setAttribute('for', 'country');
 
   inputEmail.setAttribute('placeholder', 'xxxxxx@gmail.com');
   inputEmail.setAttribute('type', 'email');
@@ -34,14 +35,26 @@ export const Signup = (onNavigate) => {
   labelPassword.setAttribute('for', 'password');
   button.setAttribute('type', 'submit');
 
+  title.textContent = 'Crear cuenta';
   button.textContent = 'Crear';
   labelUser.textContent = 'Usuario';
   labelName.textContent = 'Nombre y Apellido';
-  labelCountry.textContent = 'Pais';
+  // labelCountry.textContent = 'Pais';
   labelEmail.textContent = 'E-mail';
   labelPassword.textContent = 'Contraseña';
 
-  form.append(labelUser, inputUser, labelName, inputName, labelCountry, selectCountry, labelEmail, inputEmail, labelPassword, inputPassword, button);
+  form.append(
+    title,
+    labelUser,
+    inputUser,
+    labelName,
+    inputName,
+    labelEmail,
+    inputEmail,
+    labelPassword,
+    inputPassword,
+    button,
+  );
 
   return form;
 };
