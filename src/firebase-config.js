@@ -5,12 +5,12 @@ import { initializeApp } from 'firebase/app';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyC3ajga2HA8mA60gqE-pNkvQFF9eeHhfag',
-  authDomain: 'social-network-fems.firebaseapp.com',
-  projectId: 'social-network-fems',
-  storageBucket: 'social-network-fems.appspot.com',
-  messagingSenderId: '912113826048',
-  appId: '1:912113826048:web:291047e64c56fd1b871be5',
+  apiKey: 'AIzaSyDfverbOj1mwqSwJtiZG_lI13n7N9CltEU',
+  authDomain: 'fems-social-network-2023.firebaseapp.com',
+  projectId: 'fems-social-network-2023',
+  storageBucket: 'fems-social-network-2023.appspot.com',
+  messagingSenderId: '677179954852',
+  appId: '1:677179954852:web:c6d1035e8cb8e03540b831',
 };
 
 // Initialize Firebase

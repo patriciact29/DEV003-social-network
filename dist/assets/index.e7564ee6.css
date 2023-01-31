@@ -7,7 +7,7 @@
 
 body{
     min-height: 100vh;
-    background-image: linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(./media/background-1.jpg);
+    background-image: linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(/assets/background-1.49858dab.jpg);
     background-size: cover;
 }
 
@@ -28,22 +28,12 @@ body{
     width: 100%;
     height: 100%;
     display: flex;
+    gap: 2rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-/* .error{
-    display:none;
-} */
-.error{
-    font-size: 1rem;
-    color: red;
-    width: 22rem ;  
-    text-align: center;
-    line-height: 1.1rem;
-    display: block;
-}
 
 .container button{
     padding: var(--element-padding);
@@ -96,13 +86,11 @@ body{
     border: 0;
     box-shadow: 0 1px 2px rgba(40,40, 40, 0.5);
     text-align: center;
-    margin-bottom: 1.5rem;
 }
 
 .secondView button {
     background: var(--main-color);
     color: white;
-    margin-top: 1.5rem;
 }
 
 .secondView button:hover {
@@ -116,7 +104,6 @@ label{
 h2{
     font-size: 2rem;
     color: var(--main-color);
-    margin-bottom: 1.5rem;
 }
 
 footer{
