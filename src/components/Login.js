@@ -11,7 +11,7 @@ export const Login = (onNavigate) => {
   const inputPassword = document.createElement('input');
   const labelPassword = document.createElement('label');
 
-  form.setAttribute('class', 'container secondView');
+  form.setAttribute('class', 'containerForm');
   labelEmail.setAttribute('for', 'email');
   inputEmail.setAttribute('name', 'email');
   inputEmail.setAttribute('type', 'text');
@@ -52,13 +52,12 @@ export const Login = (onNavigate) => {
         alert(error.message);
       });
   });
-  // if (user.emailVerified === false) {
-  //   textoverificado = 'Email no verificado';
-  //   console.log(textoverificado);
-  // }
-  // else {
-  //   textoverificado = "Email verificado";
-  // }
+
+  // cambiando el background de root
+  document.getElementById('root').style.backgroundImage = 'linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(./media/background-2.png)';
+  document.getElementById('root').style.backgroundRepeat = 'repeat';
+  document.getElementById('root').style.backgroundSize = '300px';
+
   form.append(title, labelEmail, inputEmail, labelPassword, inputPassword, buttonLogin);
   return form;
 };
