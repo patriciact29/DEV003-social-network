@@ -36,16 +36,16 @@ export function registerNewUser(email, password) {
   return createUserWithEmailAndPassword(auth, email, password);
 }
 
-export function informationUser() {
-  const user = auth.currentUser;
-  if (user !== null) {
-    // The user object has basic properties such as display name, email, etc.
-    const displayName = user.displayName;
-    // const email = user.email;
-    // const photoURL = user.photoURL;
-    return displayName;
-  }
-}
+// export function informationUser() {
+//   const user = auth.currentUser;
+//   if (user !== null) {
+//     // The user object has basic properties such as display name, email, etc.
+//     const displayName = user.displayName;
+//     // const email = user.email;
+//     // const photoURL = user.photoURL;
+//     return displayName;
+//   }
+// }
 
 // export const updateUserProfile = (user, displayName, userPhoto) => {
 //   const userProperties = {

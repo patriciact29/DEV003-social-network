@@ -23,7 +23,7 @@ export const Signup = (onNavigate) => {
   const errorMessage = document.createElement('p');
 
   form.setAttribute('id', 'form');
-  form.setAttribute('class', 'container secondView');
+  form.setAttribute('class', 'containerForm');
   labelUser.setAttribute('for', 'user');
   inputUser.setAttribute('name', 'user');
   inputUser.setAttribute('type', 'text');
@@ -63,7 +63,6 @@ export const Signup = (onNavigate) => {
   errorPassword2.setAttribute('class', 'error');
   correctMessage.setAttribute('id', 'correctMessage');
   errorMessage.setAttribute('id', 'errorMessage');
-
   button.setAttribute('type', 'submit');
 
   title.textContent = 'Crear cuenta';
@@ -177,6 +176,11 @@ export const Signup = (onNavigate) => {
       document.getElementById('errorMessage').style.display = 'block';
     }
   });
+
+  // cambiando el background de root
+  document.getElementById('root').style.backgroundImage = 'linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(./media/background-2.png)';
+  document.getElementById('root').style.backgroundRepeat = 'repeat';
+  document.getElementById('root').style.backgroundSize = '300px';
 
   form.append(
     title,
