@@ -1,3 +1,4 @@
+import background2 from '../media/background-2.png';
 import { registerNewUser, verifyEmail } from '../auth.js';
 
 export const Signup = (onNavigate) => {
@@ -155,12 +156,17 @@ export const Signup = (onNavigate) => {
     const email = inputEmail.value;
     const password = inputPassword.value;
     registerNewUser(email, password)
+      .then(() => {
+        verifyEmail()
+          .then(() => {
+            onNavigate('/login');
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
       .catch((error) => {
         alert(error.message);
-      })
-      .then(() => {
-        verifyEmail();
-        onNavigate('/login');
       });
   }
 
@@ -178,7 +184,7 @@ export const Signup = (onNavigate) => {
   });
 
   // cambiando el background de root
-  document.getElementById('root').style.backgroundImage = 'linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(./media/background-2.png)';
+  document.getElementById('root').style.backgroundImage = `linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(${background2})`;
   document.getElementById('root').style.backgroundRepeat = 'repeat';
   document.getElementById('root').style.backgroundSize = '300px';
 

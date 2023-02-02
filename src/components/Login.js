@@ -1,4 +1,4 @@
-// import { sortUserPlugins } from 'vite';
+import background2 from '../media/background-2.png';
 import { loginWithEmail } from '../auth.js';
 
 export const Login = (onNavigate) => {
@@ -54,7 +54,7 @@ export const Login = (onNavigate) => {
   });
 
   // cambiando el background de root
-  document.getElementById('root').style.backgroundImage = 'linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(./media/background-2.png)';
+  document.getElementById('root').style.backgroundImage = `linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(${background2})`;
   document.getElementById('root').style.backgroundRepeat = 'repeat';
   document.getElementById('root').style.backgroundSize = '300px';
 
