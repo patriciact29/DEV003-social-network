@@ -1,30 +1,48 @@
+import { expresions, allInputs, validateInput } from '../lib/index.js';
 import background2 from '../media/background-2.png';
 import { registerNewUser, verifyEmail } from '../auth.js';
 
 export const Signup = (onNavigate) => {
-  const title = document.createElement('h2');
   const form = document.createElement('form');
-  const button = document.createElement('button');
+  const title = document.createElement('h2');
+  const divContent = document.createElement('div');
+  const divUser = document.createElement('div');
   const labelUser = document.createElement('label');
   const inputUser = document.createElement('input');
   const errorUser = document.createElement('p');
+  const divName = document.createElement('div');
   const labelName = document.createElement('label');
   const inputName = document.createElement('input');
   const errorName = document.createElement('p');
+  const divEmail = document.createElement('div');
   const labelEmail = document.createElement('label');
   const inputEmail = document.createElement('input');
   const errorEmail = document.createElement('p');
+  const divPassword = document.createElement('div');
   const labelPassword = document.createElement('label');
   const inputPassword = document.createElement('input');
   const errorPassword = document.createElement('p');
+  const divPassword2 = document.createElement('div');
   const labelPassword2 = document.createElement('label');
   const inputPassword2 = document.createElement('input');
   const errorPassword2 = document.createElement('p');
+  const divButton = document.createElement('div');
+  const button = document.createElement('button');
   const correctMessage = document.createElement('p');
   const errorMessage = document.createElement('p');
 
+  divUser.append(labelUser, inputUser, errorUser);
+  divName.append(labelName, inputName, errorName);
+  divEmail.append(labelEmail, inputEmail, errorEmail);
+  divPassword.append(labelPassword, inputPassword, errorPassword);
+  divPassword2.append(labelPassword2, inputPassword2, errorPassword2);
+  divButton.append(button, correctMessage, errorMessage);
+
+  divContent.append(divUser, divName, divEmail, divPassword, divPassword2);
+
   form.setAttribute('id', 'form');
   form.setAttribute('class', 'containerForm');
+  divContent.setAttribute('class', 'divContent');
   labelUser.setAttribute('for', 'user');
   inputUser.setAttribute('name', 'user');
   inputUser.setAttribute('type', 'text');
@@ -63,7 +81,9 @@ export const Signup = (onNavigate) => {
   errorPassword2.setAttribute('id', 'errorpassword2');
   errorPassword2.setAttribute('class', 'error');
   correctMessage.setAttribute('id', 'correctMessage');
+  correctMessage.setAttribute('class', 'correctMessage');
   errorMessage.setAttribute('id', 'errorMessage');
+  errorMessage.setAttribute('class', 'errorMessage');
   button.setAttribute('type', 'submit');
 
   title.textContent = 'Crear cuenta';
@@ -75,35 +95,35 @@ export const Signup = (onNavigate) => {
   labelEmail.textContent = 'E-mail';
   errorEmail.textContent = 'El email debe tener un formato valido. ';
   labelPassword.textContent = 'Contraseña';
-  errorPassword.textContent = 'La contraseña tiene que ser de 4 a 12 dígitos.';
+  errorPassword.textContent = 'La contraseña debe tener de 8 a 16 dígitos, mayúscula, minúscula, número, caracter especial y no acepta espacios.';
   labelPassword2.textContent = 'Confirmar contraseña';
   errorPassword2.textContent = 'Ambas contraseñas deben ser iguales.';
   correctMessage.textContent = 'Formulario enviado, verifica tu email e inicia sesión.';
   errorMessage.textContent = 'Por favor verifica que tus datos sean válidos.';
 
-  const expresions = {
-    user: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
-    name: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-    password: /^.{4,12}$/, // 4 a 12 digitos.
-    email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-  };
-  const allInputs = {
-    user: false,
-    name: false,
-    email: false,
-    password: false,
+  // export const expresions = {
+  //   user: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
+  //   name: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+  //   password: /^.{4,12}$/, // 4 a 12 digitos.
+  //   email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+  // };
+  // export const allInputs = {
+  //   user: false,
+  //   name: false,
+  //   email: false,
+  //   password: false,
 
-  };
+  // };
 
-  const validateInput = (expresion, input, element) => {
-    if (expresion.test(input.value)) {
-      document.querySelector(`#error${element}`).classList.replace('error-display', 'error');
-      allInputs[element] = true;
-    } else {
-      document.querySelector(`#error${element}`).classList.replace('error', 'error-display');
-      allInputs[element] = false;
-    }
-  };
+  // export const validateInput = (expresion, input, element) => {
+  //   if (expresion.test(input.value)) {
+  //     document.querySelector(`#error${element}`).classList.replace('error-display', 'error');
+  //     allInputs[element] = true;
+  //   } else {
+  //     document.querySelector(`#error${element}`).classList.replace('error', 'error-display');
+  //     allInputs[element] = false;
+  //   }
+  // };
 
   const validarPassword2 = () => {
     const inputPassword1 = document.getElementById('password');
@@ -175,11 +195,13 @@ export const Signup = (onNavigate) => {
     if (allInputs.user && allInputs.name && allInputs.email && allInputs.password) {
       // form.reset();
       document.getElementById('correctMessage').style.display = 'block';
+      document.getElementById('errorMessage').style.display = 'none';
       setTimeout(() => {
         register();
       }, 5000);
     } else {
       document.getElementById('errorMessage').style.display = 'block';
+      document.getElementById('correctMessage').style.display = 'none';
     }
   });
 
@@ -190,24 +212,8 @@ export const Signup = (onNavigate) => {
 
   form.append(
     title,
-    labelUser,
-    inputUser,
-    errorUser,
-    labelName,
-    inputName,
-    errorName,
-    labelEmail,
-    inputEmail,
-    errorEmail,
-    labelPassword,
-    inputPassword,
-    errorPassword,
-    labelPassword2,
-    inputPassword2,
-    errorPassword2,
-    button,
-    correctMessage,
-    errorMessage,
+    divContent,
+    divButton,
   );
 
   return form;
