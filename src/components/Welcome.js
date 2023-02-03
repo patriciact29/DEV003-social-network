@@ -1,3 +1,7 @@
+import logoBlanco from '../media/logo-blanco-fems-viajando-juntas.png';
+import logoColores from '../media/logo-fems-viajando-juntas.png';
+import logoGoogle from '../media/logo-google.png';
+import background1 from '../media/background-1.jpg';
 import { loginWithGoogle } from '../auth.js';
 
 export const Welcome = (onNavigate) => {
@@ -13,15 +17,15 @@ export const Welcome = (onNavigate) => {
 
   div.setAttribute('class', 'containerWelcome');
   div2.setAttribute('class', 'div2');
-  logo.setAttribute('src', './media/logo-blanco-fems-viajando-juntas.png');
+  logo.setAttribute('src', logoBlanco);
   logo.setAttribute('alt', 'logo-fems');
   logo.setAttribute('class', 'logo-fems');
-  logoColor.setAttribute('src', './media/logo-fems-viajando-juntas.png');
+  logoColor.setAttribute('src', logoColores);
   logoColor.setAttribute('class', 'logo-color');
   buttonLogin.setAttribute('class', 'none');
   buttonSignup.setAttribute('class', 'none');
   buttonGoogle.setAttribute('class', 'google none');
-  imgGoogle.setAttribute('src', './media/logo-google.png');
+  imgGoogle.setAttribute('src', logoGoogle);
 
   div2.append(logoColor, buttonLogin, buttonSignup, buttonGoogle);
 
@@ -70,7 +74,7 @@ export const Welcome = (onNavigate) => {
   descriptionContainerModal.append(descriptionContentModal, closeModalspan);
 
   // cambiando el background de root
-  document.getElementById('root').style.backgroundImage = 'linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(./media/background-1.jpg)';
+  document.getElementById('root').style.backgroundImage = `linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(${background1})`;
   document.getElementById('root').style.backgroundRepeat = 'no-repeat';
   document.getElementById('root').style.backgroundSize = 'cover';
   document.getElementById('root').style.backgroundPositionX = '35%';
