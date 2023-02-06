@@ -5,16 +5,30 @@ import {
 } from '../firestore.js';
 
 export const Home = (onNavigate) => {
+  const menuBg = document.createElement('div');
+  const iconMenu = document.createElement('i');
+  const header = document.createElement('header');
+  const title = document.createElement('p');
+  const nav = document.createElement('nav');
+  const buttonHome = document.createElement('button');
+  const buttonProfile = document.createElement('button');
+  const buttonLogout = document.createElement('button');
   const home = document.createElement('div');
-  const title = document.createElement('h2');
   const formNewPost = document.createElement('form');
   const inputPost = document.createElement('input');
   const buttonPost = document.createElement('button');
   const divAllPost = document.createElement('div');
   // const divPost = document.createElement('div');
-  const buttonLogout = document.createElement('button');
 
   home.setAttribute('class', 'home');
+  menuBg.setAttribute('class', 'menuBg');
+  iconMenu.setAttribute('id', 'btn-menu');
+  iconMenu.setAttribute('class', 'fa-solid fa-bars');
+  header.setAttribute('class', 'header');
+  nav.setAttribute('class', 'nav');
+  buttonHome.setAttribute('class', 'buttonHome');
+  buttonProfile.setAttribute('class', 'buttonProfile');
+  buttonLogout.setAttribute('class', 'buttonLogout');
   formNewPost.setAttribute('id', 'formNewPost');
   formNewPost.setAttribute('class', 'containerNewPost home');
   divAllPost.setAttribute('id', 'allPost');
@@ -25,7 +39,9 @@ export const Home = (onNavigate) => {
   inputPost.setAttribute('id', 'inputPost');
   buttonPost.setAttribute('id', 'buttonPost');
 
-  title.textContent = 'Página de Inicio';
+  title.textContent = 'FEMS';
+  buttonHome.textContent = 'Inicio';
+  buttonProfile.textContent = 'Mi Perfil';
   buttonLogout.textContent = 'Cerrar sesión';
   buttonPost.textContent = 'Publicar';
   buttonLogout.addEventListener('click', logout);
@@ -56,7 +72,7 @@ export const Home = (onNavigate) => {
           try {
             await deletePost(dataset.id);
           } catch (error) {
-            console.log(error);
+            // console.log(error);
           }
         });
       });
@@ -72,7 +88,7 @@ export const Home = (onNavigate) => {
             id = doc.id;
             formNewPost.buttonPost.innerText = 'Update';
           } catch (eror) {
-            console.log(error);
+            // console.log(error);
           }
         });
       });
@@ -96,11 +112,25 @@ export const Home = (onNavigate) => {
 
       formNewPost.reset();
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   });
+  // Menu hamburguesa
+  function showMenu() {
+    nav.style.right = '0px';
+    menuBg.style.display = 'block';
+  }
+  function hideMenu() {
+    nav.style.right = '-250px';
+    menuBg.style.display = 'none';
+  }
+  iconMenu.addEventListener('click', showMenu);
+  menuBg.addEventListener('click', hideMenu);
+
   formNewPost.append(inputPost, buttonPost);
+  header.append(iconMenu, title, nav);
+  nav.append(buttonHome, buttonProfile, buttonLogout);
   // divAllPost.append(divPost);
-  home.append(title, buttonLogout, formNewPost, divAllPost);
+  home.append(menuBg, header, formNewPost, divAllPost);
   return home;
 };
