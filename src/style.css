@@ -247,6 +247,7 @@ footer{
     text-align: center;
     background-color: rgba(255, 255, 255, 0.5);
     width: 100%;
+    display: none;
 }
 
 footer p{
@@ -367,7 +368,8 @@ display: none;
 
 .containerNewPost{
     display: flex;
-    width: auto;
+    flex-direction: column;
+    width: 80%;
     height: auto;
 }
 
@@ -376,7 +378,7 @@ display: none;
     border-radius: 2rem;
     border:0;
     padding: 1rem;
-    min-width: 30rem;
+    width: 100%;
     height: auto;
     font-size: 1.5rem;
 }
@@ -392,23 +394,32 @@ display: none;
     cursor: pointer;
     border: 0;
     box-shadow: 0 1px 2px rgba(40,40, 40, 0.5);
-    align-self: right;
+    align-self: flex-end;
 }
 
-.containerAllPost{
+.containerAllPost {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
     height: auto;
-    width: 90%;
-    overflow: auto;
 }
 
-.containerPost{
+.containerPost {
     background-color: rgba(154, 84, 160, 0.25);
     border-radius: 2rem;
     padding: 1rem;
-    width: 90%;
+    width: 100%;
     height: auto;
     margin: 0;
     font-size: 2rem;
+}
+
+.optionsMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    width: 100%;
+    height: auto;
 }
 
 @media (min-width: 700px) {

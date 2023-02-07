@@ -3,6 +3,19 @@ import { expresions, allInputs, validateInput } from '../lib/validate-inputs.js'
 import background2 from '../media/background-2.png';
 import { loginWithEmail } from '../firebase/auth.js';
 
+const validFormLogin = (e) => {
+  switch (e.target.name) {
+    case 'email':
+      validateInput(expresions.email, e.target, 'email');
+      break;
+    case 'password':
+      validateInput(expresions.password, e.target, 'password');
+      break;
+    default:
+      // console.log('default');
+  }
+};
+
 export const Login = (onNavigate) => {
   const divAll = document.createElement('div');
   const divImage = document.createElement('img');
@@ -54,19 +67,6 @@ export const Login = (onNavigate) => {
   divContent.append(divEmail, divPassword);
   form.append(title, divContent, buttonLogin);
   divAll.append(divImage, form);
-
-  const validFormLogin = (e) => {
-    switch (e.target.name) {
-      case 'email':
-        validateInput(expresions.email, e.target, 'email');
-        break;
-      case 'password':
-        validateInput(expresions.password, e.target, 'password');
-        break;
-      default:
-        // console.log('default');
-    }
-  };
 
   inputEmail.addEventListener('keyup', validFormLogin);
   inputEmail.addEventListener('blur', validFormLogin);

@@ -23,7 +23,7 @@ export const Home = (onNavigate) => {
   iconMenu.setAttribute('id', 'btn-menu');
   iconMenu.setAttribute('class', 'fa-solid fa-bars');
   header.setAttribute('class', 'header');
-  nav.setAttribute('class', 'nav-none');
+  nav.setAttribute('class', 'hide');
   buttonHome.setAttribute('class', 'buttonHome');
   buttonProfile.setAttribute('class', 'buttonProfile');
   buttonLogout.setAttribute('class', 'buttonLogout');
@@ -102,7 +102,7 @@ export const Home = (onNavigate) => {
           editStatus = true;
           id = doc.id;
           formNewPost.buttonPost.innerText = 'Actualizar';
-        } catch (eror) {
+        } catch (error) {
           // console.log(error);
         }
       });
@@ -128,23 +128,25 @@ export const Home = (onNavigate) => {
   // });
 
   // ejecutando lo que se desee hacer (guardar nuevo post o editar actulizar post existente)
-  formNewPost.addEventListener('submit', /*async*/ (e) => {
+  formNewPost.addEventListener('submit', /* async */ (e) => {
     e.preventDefault();
 
     try {
-      if (!editStatus) {
-        /*await*/ savePost(inputPost.value);
-      } else {
-        /*await*/ updatePost(id, {
-          post: inputPost.value,
-        });
+      if (inputPost.value !== '') {
+        if (!editStatus) {
+          /* await */ savePost(inputPost.value);
+        } else {
+          /* await */ updatePost(id, {
+            post: inputPost.value,
+          });
 
-        editStatus = false;
-        id = '';
-        formNewPost.buttonPost.innerText = 'Publicar';
+          editStatus = false;
+          id = '';
+          formNewPost.buttonPost.innerText = 'Publicar';
+        }
+
+        formNewPost.reset(); // formatea formulario
       }
-
-      formNewPost.reset(); // formatea formulario
     } catch (error) {
       // console.log(error);
     }
