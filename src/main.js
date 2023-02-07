@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { app as firebase } from './firebase-config.js';
+import { app as firebase } from './firebase/firebase-config.js';
 import { Welcome } from './components/Welcome.js';
 import { Login } from './components/Login.js';
 import { Signup } from './components/Signup.js';

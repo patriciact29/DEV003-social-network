@@ -1,7 +1,7 @@
 import loginImg from '../media/login-img.png';
-import { expresions, allInputs, validateInput } from '../lib/index.js';
+import { expresions, allInputs, validateInput } from '../lib/validate-inputs.js';
 import background2 from '../media/background-2.png';
-import { loginWithEmail } from '../auth.js';
+import { loginWithEmail } from '../firebase/auth.js';
 
 export const Login = (onNavigate) => {
   const divAll = document.createElement('div');
@@ -104,8 +104,7 @@ export const Login = (onNavigate) => {
   });
 
   // cambiando el background de root
-  // export const background2 = () => document.getElementById('root')
-  // .classList.replace('root-background1', 'root-background2');
+  // document.getElementById('root').classList.replace('root-background1', 'root-background2');
   document.getElementById('root').style.backgroundImage = `linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(${background2})`;
   document.getElementById('root').style.backgroundRepeat = 'repeat';
   document.getElementById('root').style.backgroundSize = '300px';

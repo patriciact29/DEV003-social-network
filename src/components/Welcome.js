@@ -2,7 +2,7 @@ import logoBlanco from '../media/logo-blanco-fems-viajando-juntas.png';
 import logoColores from '../media/logo-fems-viajando-juntas.png';
 import logoGoogle from '../media/logo-google.png';
 import background1 from '../media/background-1.jpg';
-import { loginWithGoogle } from '../auth.js';
+import { loginWithGoogle } from '../firebase/auth.js';
 
 export const Welcome = (onNavigate) => {
   const div = document.createElement('div');

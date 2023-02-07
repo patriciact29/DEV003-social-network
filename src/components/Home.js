@@ -1,7 +1,7 @@
-import { logout } from '../auth.js';
+import { logout } from '../firebase/auth.js';
 import {
   deletePost, onGetPosts, savePost, getPost, updatePost,
-} from '../firestore.js';
+} from '../firebase/firestore.js';
 
 export const Home = (onNavigate) => {
   const menuBg = document.createElement('div');
@@ -40,11 +40,15 @@ export const Home = (onNavigate) => {
   buttonProfile.textContent = 'Mi Perfil';
   buttonLogout.textContent = 'Cerrar sesión';
   buttonPost.textContent = 'Publicar';
+
+  // Cerrar sesión
   buttonLogout.addEventListener('click', logout);
   buttonLogout.addEventListener('click', () => {
     onNavigate('/');
   });
 
+  // Escucha todo el tiempo...
+  // para crear post
   let editStatus = false;
   let id = '';
   // window.addEventListener('DOMContentLoaded', async () => {
@@ -55,23 +59,38 @@ export const Home = (onNavigate) => {
       const inputPosts = doc.data();
       html += `
         <div class = 'containerPost home'>
+          <div class="optionsMenu">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+          </div>
+          <section id="options" class="hide">
+            <button class='btn-delete' data-id="${doc.id}">Eliminar</button>
+            <button class='btn-edit' data-id="${doc.id}">Editar</button>
+          </section>
           <p>${inputPosts.post}</p>
-          <button class='btn-delete' data-id="${doc.id}">Eliminar</button>
-          <button class='btn-edit' data-id="${doc.id}">Editar</button>
         </div>
   `;
     });
+
+    // para eliminar post
     divAllPost.innerHTML = html;
     const btnsDelete = divAllPost.querySelectorAll('.btn-delete');
     btnsDelete.forEach((btn) => {
-      btn.addEventListener('click', async ({ target: { dataset } }) => {
-        try {
-          await deletePost(dataset.id);
-        } catch (error) {
-          // console.log(error);
+      // btn.addEventListener('click', async ({ target: { dataset } }) => {
+      //   try {
+      //     await deletePost(dataset.id);
+      //   } catch (error) {
+      //     // console.log(error);
+      //   }
+      // });
+      btn.addEventListener('click', ({ target: { dataset } }) => {
+        const confirmDelete = confirm('¿Segura que deseas eliminar este post?');
+        if (confirmDelete) {
+          deletePost(dataset.id);
         }
       });
     });
+
+    // para editar post
     const btnsEdit = divAllPost.querySelectorAll('.btn-edit');
     btnsEdit.forEach((btn) => {
       btn.addEventListener('click', async (e) => {
@@ -82,32 +101,50 @@ export const Home = (onNavigate) => {
 
           editStatus = true;
           id = doc.id;
-          formNewPost.buttonPost.innerText = 'Update';
+          formNewPost.buttonPost.innerText = 'Actualizar';
         } catch (eror) {
           // console.log(error);
         }
       });
     });
+
+    // Menu opciones
+    const optionsMenu = divAllPost.querySelector('.optionsMenu');
+    const options = divAllPost.querySelector('.hide');
+
+    function showOptions() {
+      options.classList.replace('hide', 'showOptions');
+    }
+    optionsMenu.addEventListener('click', showOptions);
+
+    // Probando codigo
+    // const optionsMenu = divAllPost.querySelectorAll('.optionsMenu');
+    // optionsMenu.forEach((option) => {
+    //   option.addEventListener('click', () => {
+    //     option.classList.replace('hide', 'showOptions');
+    //   });
+    // });
   });
   // });
 
-  formNewPost.addEventListener('submit', async (e) => {
+  // ejecutando lo que se desee hacer (guardar nuevo post o editar actulizar post existente)
+  formNewPost.addEventListener('submit', /*async*/ (e) => {
     e.preventDefault();
 
     try {
       if (!editStatus) {
-        await savePost(inputPost.value);
+        /*await*/ savePost(inputPost.value);
       } else {
-        await updatePost(id, {
+        /*await*/ updatePost(id, {
           post: inputPost.value,
         });
 
         editStatus = false;
         id = '';
-        formNewPost.buttonPost.innerText = 'Guardar';
+        formNewPost.buttonPost.innerText = 'Publicar';
       }
 
-      formNewPost.reset();
+      formNewPost.reset(); // formatea formulario
     } catch (error) {
       // console.log(error);
     }
@@ -115,17 +152,19 @@ export const Home = (onNavigate) => {
 
   // Menu hamburguesa
   function showMenu() {
-    nav.style.right = '0px';
     menuBg.style.display = 'block';
-    nav.classList.replace('nav-none', 'nav');
+    nav.classList.replace('hide', 'nav');
   }
+
   function hideMenu() {
-    nav.style.right = '-250px';
+    nav.classList.replace('nav', 'hide');
     menuBg.style.display = 'none';
   }
+
   iconMenu.addEventListener('click', showMenu);
   menuBg.addEventListener('click', hideMenu);
 
+  // mostrando elementos
   formNewPost.append(inputPost, buttonPost);
   header.append(iconMenu, title, nav);
   nav.append(buttonHome, buttonProfile, buttonLogout);

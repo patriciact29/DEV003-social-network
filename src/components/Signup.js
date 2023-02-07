@@ -1,6 +1,6 @@
-import { expresions, allInputs, validateInput } from '../lib/index.js';
+import { expresions, allInputs, validateInput } from '../lib/validate-inputs.js';
 import background2 from '../media/background-2.png';
-import { registerNewUser, verifyEmail } from '../auth.js';
+import { registerNewUser, verifyEmail } from '../firebase/auth.js';
 
 export const Signup = (onNavigate) => {
   const form = document.createElement('form');

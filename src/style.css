@@ -25,7 +25,7 @@ body{
     --element-marging: 1.5rem;
 }
 
-/* Intento de cambio de clase para background 
+/* Intento de cambio de clase para background  */
 .root-background1{
     background-image: linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(./media/background-1.jpg);
     background-repeat: no-repeat;
@@ -37,7 +37,7 @@ body{
     background-image: linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(./media/background-2.png);
     background-repeat: repeat;
     background-size: 300px;
-} */
+}
 
 .containerWelcome{
     display: flex;
@@ -297,14 +297,14 @@ footer p{
     margin: 2rem;
 }
 
-.nav-none{
+.hide{
     display: none;
 }
 
 .nav{
     position: fixed;
     top:0;
-    right: -100px;
+    right: 0;
     background: white;
     width: 6rem;
     height: 6rem;
@@ -359,6 +359,10 @@ width: 100%;
 height: 100vh;
 background: rgba(0,0,0,0.5);
 display: none;
+}
+
+.showOptions{
+    display: block;
 }
 
 .containerNewPost{
