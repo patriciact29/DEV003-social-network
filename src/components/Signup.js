@@ -2,6 +2,42 @@ import { expresions, allInputs, validateInput } from '../lib/validate-inputs.js'
 import background2 from '../media/background-2.png';
 import { registerNewUser, verifyEmail } from '../firebase/auth.js';
 
+const validarPassword2 = () => {
+  const inputPassword1 = document.getElementById('password');
+  const inputPasswordConfirm = document.getElementById('password2');
+
+  if (inputPassword1.value !== inputPasswordConfirm.value) {
+    document.querySelector('#errorpassword2').classList.replace('error', 'error-display');
+    allInputs.password = false;
+  } else {
+    document.querySelector('#errorpassword2').classList.replace('error-display', 'error');
+    allInputs.password = true;
+  }
+};
+
+const validForm = (e) => {
+  switch (e.target.name) {
+    case 'user':
+      validateInput(expresions.user, e.target, 'user');
+      break;
+    case 'name':
+      validateInput(expresions.name, e.target, 'name');
+      break;
+    case 'email':
+      validateInput(expresions.email, e.target, 'email');
+      break;
+    case 'password':
+      validateInput(expresions.password, e.target, 'password');
+      validarPassword2();
+      break;
+    case 'password2':
+      validarPassword2();
+      break;
+    default:
+      // console.log('default');
+  }
+};
+
 export const Signup = (onNavigate) => {
   const form = document.createElement('form');
   const title = document.createElement('h2');
@@ -100,42 +136,6 @@ export const Signup = (onNavigate) => {
   errorPassword2.textContent = 'Ambas contraseñas deben ser iguales.';
   correctMessage.textContent = 'Formulario enviado, verifica tu email e inicia sesión.';
   errorMessage.textContent = 'Por favor verifica que tus datos sean válidos.';
-
-  const validarPassword2 = () => {
-    const inputPassword1 = document.getElementById('password');
-    const inputPasswordConfirm = document.getElementById('password2');
-
-    if (inputPassword1.value !== inputPasswordConfirm.value) {
-      document.querySelector('#errorpassword2').classList.replace('error', 'error-display');
-      allInputs.password = false;
-    } else {
-      document.querySelector('#errorpassword2').classList.replace('error-display', 'error');
-      allInputs.password = true;
-    }
-  };
-
-  const validForm = (e) => {
-    switch (e.target.name) {
-      case 'user':
-        validateInput(expresions.user, e.target, 'user');
-        break;
-      case 'name':
-        validateInput(expresions.name, e.target, 'name');
-        break;
-      case 'email':
-        validateInput(expresions.email, e.target, 'email');
-        break;
-      case 'password':
-        validateInput(expresions.password, e.target, 'password');
-        validarPassword2();
-        break;
-      case 'password2':
-        validarPassword2();
-        break;
-      default:
-        // console.log('default');
-    }
-  };
 
   inputUser.addEventListener('keyup', validForm);
   inputUser.addEventListener('blur', validForm);
