@@ -3,6 +3,7 @@ import logoColores from '../media/logo-fems-viajando-juntas.png';
 import logoGoogle from '../media/logo-google.png';
 import background1 from '../media/background-1.jpg';
 import { loginWithGoogle } from '../firebase/auth.js';
+import { doc } from 'firebase/firestore';
 
 export const Welcome = (onNavigate) => {
   const div = document.createElement('div');
@@ -55,13 +56,15 @@ export const Welcome = (onNavigate) => {
 
   // MODAL
   const descriptionContainerModal = document.createElement('div');
-  const descriptionContentModal = document.createElement('p');
-  const closeModalspan = document.createElement('span');
+  const descriptionContentModal = document.createElement('div');
+  const closeModal = document.createElement('div');
+  const iconModal = document.createElement('i');
 
   descriptionContainerModal.setAttribute('class', 'modalContainer');
   descriptionContentModal.setAttribute('class', 'modalContent');
-  closeModalspan.setAttribute('class', 'modalSpan');
-  closeModalspan.addEventListener('click', () => {
+  closeModal.setAttribute('class', 'closeModal');
+  iconModal.setAttribute('class', 'fa-solid fa-arrow-right');
+  closeModal.addEventListener('click', () => {
     descriptionContainerModal.style.display = 'none';
     buttonLogin.style.display = 'block';
     buttonSignup.style.display = 'block';
@@ -69,9 +72,8 @@ export const Welcome = (onNavigate) => {
   });
 
   descriptionContentModal.textContent = 'Fems es un espacio seguro solo para mujeres donde podrás compartir experiencias e información sobre viajes.';
-  closeModalspan.textContent = '>';
-
-  descriptionContainerModal.append(descriptionContentModal, closeModalspan);
+  closeModal.append(iconModal);
+  descriptionContainerModal.append(descriptionContentModal, closeModal);
 
   // cambiando el background de root
   document.getElementById('root').style.backgroundImage = `linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(${background1})`;
