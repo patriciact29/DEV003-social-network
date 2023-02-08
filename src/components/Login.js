@@ -73,24 +73,26 @@ export const Login = (onNavigate) => {
   inputPassword.addEventListener('keyup', validFormLogin);
   inputPassword.addEventListener('blur', validFormLogin);
 
+  // fx para iniciar sesión
   function userLogin() {
     const email = inputEmail.value;
     const password = inputPassword.value;
-
+    // trayendo fx desde f/auth para iniciar sesión
     loginWithEmail(email, password)
+      // si se cumple la promesa entonces...
       .then((result) => {
         const user = result.user;
+        // revisa si el correo no esta verificado
         if (user.emailVerified === false) {
+          // entonces se alerta al usuario
           alert('Email no verificado, se le envió un correo de verificación');
         } else {
-          // console.log('verificado');
+          // si no (si esta verificado) se envia al usuario al home
           onNavigate('/home');
         }
-      })
+      }) // si no logra iniciar sesión, envía una alerta de error
       .catch((error) => {
-        // console.log(error.code);
-        // console.log(error.message);
-        alert(error.message);
+        alert(error); // ej. no existe el correo
       });
   }
 

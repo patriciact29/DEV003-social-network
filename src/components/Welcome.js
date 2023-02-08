@@ -3,7 +3,8 @@ import logoColores from '../media/logo-fems-viajando-juntas.png';
 import logoGoogle from '../media/logo-google.png';
 import background1 from '../media/background-1.jpg';
 import { loginWithGoogle } from '../firebase/auth.js';
-import { doc } from 'firebase/firestore';
+import { saveUser } from '../firebase/firestore';
+// import { doc } from 'firebase/firestore';
 
 export const Welcome = (onNavigate) => {
   const div = document.createElement('div');
@@ -44,7 +45,9 @@ export const Welcome = (onNavigate) => {
   buttonGoogle.append(imgGoogle, txtGoogle);
   buttonGoogle.addEventListener('click', () => {
     loginWithGoogle()
-      .then(() => {
+      .then((result) => {
+        const user = result.user;
+        saveUser(user, user.displayName, user.displayName);
         onNavigate('/home');
       })
       .catch((error) => {

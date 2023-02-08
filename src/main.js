@@ -5,9 +5,8 @@ import { Login } from './components/Login.js';
 import { Signup } from './components/Signup.js';
 import { Home } from './components/Home.js';
 
-// import { onNavigate } from './main.js';
-
 const auth = getAuth(firebase);
+
 // ruteado
 const root = document.getElementById('root');
 const routes = {
@@ -36,9 +35,14 @@ window.onpopstate = () => {
 
 root.appendChild(component(onNavigate));
 
+// opción 1
+function showUserInformation(user) {
+  console.log(user.displayName, user.email, user.uid);
+}
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log('home');
+    showUserInformation(user);
     onNavigate('/home');
   } else {
     console.log('welcome');
