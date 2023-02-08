@@ -5,6 +5,7 @@ import {
 
 export const Home = (onNavigate) => {
   const menuBg = document.createElement('div');
+  const divIconMenu = document.createElement('div');
   const iconMenu = document.createElement('i');
   const header = document.createElement('header');
   const title = document.createElement('p');
@@ -20,8 +21,8 @@ export const Home = (onNavigate) => {
 
   home.setAttribute('class', 'home');
   menuBg.setAttribute('class', 'menuBg');
-  iconMenu.setAttribute('id', 'btn-menu');
-  iconMenu.setAttribute('class', 'fa-solid fa-bars');
+  divIconMenu.setAttribute('id', 'btn-menu');
+  iconMenu.setAttribute('class', 'fa-sharp fa-solid fa-bars');
   header.setAttribute('class', 'header');
   nav.setAttribute('class', 'hide');
   buttonHome.setAttribute('class', 'buttonHome');
@@ -59,13 +60,11 @@ export const Home = (onNavigate) => {
       const inputPosts = doc.data();
       html += `
         <div class = 'containerPost home'>
-          <div class="optionsMenu">
-            <i class="fa-solid fa-ellipsis-vertical"></i>
+          <div class="optionsMenu">   
+            <button class='btn-delete' data-id="${doc.id}"> <i class="fa-solid fa-trash"></i> Eliminar</button>
+            <button class='btn-edit' data-id="${doc.id}"> <i class="fa-solid fa-pen"></i> Editar</button>
           </div>
-          <section id="options" class="hide">
-            <button class='btn-delete' data-id="${doc.id}">Eliminar</button>
-            <button class='btn-edit' data-id="${doc.id}">Editar</button>
-          </section>
+
           <p>${inputPosts.post}</p>
         </div>
   `;
@@ -168,7 +167,8 @@ export const Home = (onNavigate) => {
 
   // mostrando elementos
   formNewPost.append(inputPost, buttonPost);
-  header.append(iconMenu, title, nav);
+  divIconMenu.append(iconMenu);
+  header.append(divIconMenu, title, nav);
   nav.append(buttonHome, buttonProfile, buttonLogout);
 
   // divAllPost.append(divPost);
