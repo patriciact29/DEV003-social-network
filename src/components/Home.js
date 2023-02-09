@@ -1,4 +1,4 @@
-import { logout } from '../firebase/auth.js';
+import { informationUser, logout } from '../firebase/auth.js';
 import {
   deletePost, onGetPosts, savePost, getPost, updatePost,
 } from '../firebase/firestore.js';
@@ -42,8 +42,12 @@ export const Home = (onNavigate) => {
   buttonLogout.textContent = 'Cerrar sesión';
   buttonPost.textContent = 'Publicar';
 
-  // Cerrar sesión
+  // opción 2
+  informationUser();
+
+  // el botón ejecuta la fx logout para cerrar sesión
   buttonLogout.addEventListener('click', logout);
+  // el botón ejecuta la fx que nos lleva a Welcome
   buttonLogout.addEventListener('click', () => {
     onNavigate('/');
   });
@@ -52,7 +56,7 @@ export const Home = (onNavigate) => {
   // para crear post
   let editStatus = false;
   let id = '';
-  // window.addEventListener('DOMContentLoaded', async () => {
+
   onGetPosts((querySnapshot) => {
     let html = '';
 
@@ -70,17 +74,10 @@ export const Home = (onNavigate) => {
   `;
     });
 
-    // para eliminar post
+    // la fx del botón para eliminar post
     divAllPost.innerHTML = html;
     const btnsDelete = divAllPost.querySelectorAll('.btn-delete');
     btnsDelete.forEach((btn) => {
-      // btn.addEventListener('click', async ({ target: { dataset } }) => {
-      //   try {
-      //     await deletePost(dataset.id);
-      //   } catch (error) {
-      //     // console.log(error);
-      //   }
-      // });
       btn.addEventListener('click', ({ target: { dataset } }) => {
         const confirmDelete = confirm('¿Segura que deseas eliminar este post?');
         if (confirmDelete) {
@@ -89,7 +86,7 @@ export const Home = (onNavigate) => {
       });
     });
 
-    // para editar post
+    // la fx del botón para editar post
     const btnsEdit = divAllPost.querySelectorAll('.btn-edit');
     btnsEdit.forEach((btn) => {
       btn.addEventListener('click', async (e) => {
@@ -115,30 +112,24 @@ export const Home = (onNavigate) => {
       options.classList.replace('hide', 'showOptions');
     }
     optionsMenu.addEventListener('click', showOptions);
-
-    // Probando codigo
-    // const optionsMenu = divAllPost.querySelectorAll('.optionsMenu');
-    // optionsMenu.forEach((option) => {
-    //   option.addEventListener('click', () => {
-    //     option.classList.replace('hide', 'showOptions');
-    //   });
-    // });
   });
-  // });
 
   // ejecutando lo que se desee hacer (guardar nuevo post o editar actulizar post existente)
   formNewPost.addEventListener('submit', /* async */ (e) => {
     e.preventDefault();
 
     try {
+      // restrigimos que el input este vacio (no se ejecuta la fx)
       if (inputPost.value !== '') {
+        // si el status es falseo entoces...
         if (!editStatus) {
-          /* await */ savePost(inputPost.value);
+          // se publica un nuevo post
+          savePost(inputPost.value);
         } else {
-          /* await */ updatePost(id, {
+          // sino, se actualizará el post existente
+          updatePost(id, {
             post: inputPost.value,
           });
-
           editStatus = false;
           id = '';
           formNewPost.buttonPost.innerText = 'Publicar';
