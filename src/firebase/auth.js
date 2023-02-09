@@ -37,7 +37,7 @@ export function loginWithEmail(email, password) {
 export function informationUser() {
   const user = auth.currentUser;
   if (user !== null) {
-    console.log(user);
+    // console.log(user);
     // const displayName = user.displayName;
     // const email = user.email;
     // const photoURL = user.photoURL;
