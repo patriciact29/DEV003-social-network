@@ -1,4 +1,4 @@
-import { logout } from '../firebase/auth.js';
+import { informationUser, logout } from '../firebase/auth.js';
 import {
   deletePost, onGetPosts, savePost, getPost, updatePost,
 } from '../firebase/firestore.js';
@@ -42,8 +42,12 @@ export const Home = (onNavigate) => {
   buttonLogout.textContent = 'Cerrar sesión';
   buttonPost.textContent = 'Publicar';
 
-  // Cerrar sesión
+  // opción 2
+  informationUser();
+
+  // el botón ejecuta la fx logout para cerrar sesión
   buttonLogout.addEventListener('click', logout);
+  // el botón ejecuta la fx que nos lleva a Welcome
   buttonLogout.addEventListener('click', () => {
     onNavigate('/');
   });
@@ -57,6 +61,7 @@ export const Home = (onNavigate) => {
     let html = '';
 
     querySnapshot.forEach((doc) => {
+      console.log(doc);
       const inputPosts = doc.data();
       html += `
         <div class = 'containerPost home'>

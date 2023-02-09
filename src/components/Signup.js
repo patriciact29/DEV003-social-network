@@ -1,6 +1,7 @@
 import { expresions, allInputs, validateInput } from '../lib/validate-inputs.js';
 import background2 from '../media/background-2.png';
 import { registerNewUser, verifyEmail } from '../firebase/auth.js';
+import { saveUser } from '../firebase/firestore.js';
 
 const validarPassword2 = () => {
   const inputPassword1 = document.getElementById('password');
@@ -148,19 +149,30 @@ export const Signup = (onNavigate) => {
   inputPassword2.addEventListener('keyup', validForm);
   inputPassword2.addEventListener('blur', validForm);
 
+  // fx para registrar nuevo usuario con correo y contraseña
   function register() {
+    // datos que el usuario ha introducido en la página de registro
     const email = inputEmail.value;
     const password = inputPassword.value;
+    const name = inputName.value;
+    const userUser = inputUser.value;
+    // trayendo fx desde firebase/firestore para registrar nuevo usuario (promesa)
     registerNewUser(email, password)
-      .then(() => {
+      // si la promesa se ejecuta entonces...
+      .then((result) => { // se trae un resultado
+        const user = result.user; // se accede al usuario del resultado
+        // fx desde f/firestore que guarda lo datos del usuario en una colección
+        saveUser(user, name, userUser);
+        // fx desde f/auth que envía un correo para verificar el email del usario
         verifyEmail()
-          .then(() => {
-            onNavigate('/login');
+          .then(() => { // despues de que se envíe el correo de verificación...
+            onNavigate('/login'); // se redirige al usuario al Login
           })
-          .catch((error) => {
-            // console.log(error);
+          .catch((error) => { // si la promesa no se cumple lanza un alerta con el error
+            alert(error);
           });
       })
+      // si la promesa no se cumple lanza un alerta con el error
       .catch((error) => {
         alert(error.message);
       });
