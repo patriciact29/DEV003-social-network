@@ -16,6 +16,7 @@ const routes = {
   '/home': Home,
 };
 
+// sirve para cambiar la URL de la web
 export const onNavigate = (pathname) => {
   window.history.pushState(
     {},
@@ -28,6 +29,7 @@ export const onNavigate = (pathname) => {
 
 const component = routes[window.location.pathname];
 
+// sirve para cargar el contenido de root
 window.onpopstate = () => {
   root.removeChild(root.firstChild);
   root.append(component(onNavigate));
@@ -40,12 +42,12 @@ function showUserInformation(user) {
   console.log(user.displayName, user.email, user.uid);
 }
 
+// fx de firebase que nos permite reconocer si hay un usuario logueado...
 onAuthStateChanged(auth, (user) => {
-  if (user) {
+  if (user) { // si hay usuario lo lleva al home y no le permite revolver
     showUserInformation(user);
     onNavigate('/home');
-  } else {
-    console.log('welcome');
+  } else { // si no lo mantiene o lleva a la página welcome (no se puede ir a otras páginas)
     onNavigate('/');
   }
 });
