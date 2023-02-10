@@ -1,6 +1,7 @@
 import {
   getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, getDoc, updateDoc, setDoc,
 } from 'firebase/firestore';
+import { auth } from './auth.js';
 import { app as firebase } from './firebase-config.js';
 
 // constante que inicializa a firesotre (db = data base)
@@ -8,7 +9,13 @@ export const db = getFirestore(firebase);
 
 // addDoc fx desde firestore que nos permite guardar los post
 export const savePost = (post) => {
-  addDoc(collection(db, 'posts'), { post });
+  const userId = auth.currentUser;
+  addDoc(collection(db, 'posts'), {
+    post,
+    userUid: userId.uid,
+    email: userId.email,
+    // Time stamp, ordenar posts
+  });
 };
 
 // no sabemos por qué esta aquí...
