@@ -4,7 +4,6 @@ import logoGoogle from '../media/logo-google.png';
 import background1 from '../media/background-1.jpg';
 import { loginWithGoogle } from '../firebase/auth.js';
 import { saveUser } from '../firebase/firestore';
-// import { doc } from 'firebase/firestore';
 
 export const Welcome = (onNavigate) => {
   const div = document.createElement('div');
@@ -31,28 +30,30 @@ export const Welcome = (onNavigate) => {
 
   div2.append(logoColor, buttonLogin, buttonSignup, buttonGoogle);
 
+  // Se crea el contenido del botón y se le agrega funcionalidad que envía a login
   buttonLogin.textContent = 'Iniciar sesión';
   buttonLogin.addEventListener('click', () => {
     onNavigate('/login');
   });
 
+  // Se crea el contenido del botón y se le agrega funcionalidad que envía a signup
   buttonSignup.textContent = 'Crear cuenta';
   buttonSignup.addEventListener('click', () => {
     onNavigate('/signup');
   });
 
+  // Se crea el contenido del botón y se le agrega funcionalidad que inicia sesión con google
   txtGoogle.textContent = 'Continuar con Google';
   buttonGoogle.append(imgGoogle, txtGoogle);
   buttonGoogle.addEventListener('click', () => {
-    loginWithGoogle()
+    loginWithGoogle() // Fx traida desde f/auth
       .then((result) => {
-        const user = result.user;
+        const user = result.user; // Se trae la información del usuario
+        // Fx traida desde f/firestore, que guarda los datos del usuario en firestore
         saveUser(user, user.displayName, user.displayName);
-        onNavigate('/home');
+        onNavigate('/home'); // Redirige al home
       })
-      .catch((error) => {
-        console.log(error.code);
-        console.log(error.message);
+      .catch((error) => { // En caso que ocurra un error, se mostrará una alerta
         alert(error.message);
       });
   });
@@ -67,6 +68,8 @@ export const Welcome = (onNavigate) => {
   descriptionContentModal.setAttribute('class', 'modalContent');
   closeModal.setAttribute('class', 'closeModal');
   iconModal.setAttribute('class', 'fa-solid fa-arrow-right');
+
+  // Fx que muestra y oculta el modal
   closeModal.addEventListener('click', () => {
     descriptionContainerModal.style.display = 'none';
     buttonLogin.style.display = 'block';

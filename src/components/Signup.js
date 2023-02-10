@@ -1,22 +1,13 @@
-import { expresions, allInputs, validateInput } from '../lib/validate-inputs.js';
+import {
+  expresions, allInputs, validateInput, validatePassword2,
+} from '../lib/validate-inputs.js';
 import background2 from '../media/background-2.png';
 import { registerNewUser, verifyEmail } from '../firebase/auth.js';
 import { saveUser } from '../firebase/firestore.js';
 
-const validarPassword2 = () => {
-  const inputPassword1 = document.getElementById('password');
-  const inputPasswordConfirm = document.getElementById('password2');
-
-  if (inputPassword1.value !== inputPasswordConfirm.value) {
-    document.querySelector('#errorpassword2').classList.replace('error', 'error-display');
-    allInputs.password = false;
-  } else {
-    document.querySelector('#errorpassword2').classList.replace('error-display', 'error');
-    allInputs.password = true;
-  }
-};
-
+// La fx que valida los inputs
 const validForm = (e) => {
+  // Se coloca condición para cada input
   switch (e.target.name) {
     case 'user':
       validateInput(expresions.user, e.target, 'user');
@@ -29,13 +20,12 @@ const validForm = (e) => {
       break;
     case 'password':
       validateInput(expresions.password, e.target, 'password');
-      validarPassword2();
+      validatePassword2();
       break;
     case 'password2':
-      validarPassword2();
+      validatePassword2();
       break;
     default:
-      // console.log('default');
   }
 };
 
@@ -178,16 +168,20 @@ export const Signup = (onNavigate) => {
       });
   }
 
+  // Fx que envía el formulario si...
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    // El valor de todos los inputs es verdadero
     if (allInputs.user && allInputs.name && allInputs.email && allInputs.password) {
-      // form.reset();
+      // se oculta el mensaje de "error" y se muestra el de "correcto"
       document.getElementById('correctMessage').style.display = 'block';
       document.getElementById('errorMessage').style.display = 'none';
       setTimeout(() => {
         register();
-      }, 5000);
+      }, 3000);
     } else {
+      // Si el valor de los inputs es falso, no se envía el formulario...
+      // y se muestra el mensaje de "error"
       document.getElementById('errorMessage').style.display = 'block';
       document.getElementById('correctMessage').style.display = 'none';
     }
