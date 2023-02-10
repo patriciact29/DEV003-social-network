@@ -80,7 +80,9 @@ export const Home = (onNavigate) => {
     const btnsDelete = divAllPost.querySelectorAll('.btn-delete');
     btnsDelete.forEach((btn) => {
       btn.addEventListener('click', ({ target: { dataset } }) => {
+        /* eslint-disable no-alert, no-restricted-globals */
         const confirmDelete = confirm('¿Segura que deseas eliminar este post?');
+        /* eslint-disable no-alert, no-restricted-globals */
         // si el usuario confirma...
         if (confirmDelete) {
           deletePost(dataset.id); // se elimina con la fx q se trae de f/firestore
