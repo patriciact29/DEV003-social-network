@@ -11,10 +11,12 @@ export const savePost = (post) => {
   addDoc(collection(db, 'posts'), { post });
 };
 
-// no sabemos por qué esya aquí...
+// no sabemos por qué esta aquí...
 // export const getPosts = () => getDocs(collection(db, 'posts'));
 
-// onSnapShot fx desde forestore 
+// onSnapShot fx desde firestore
+// onSnapshot = devuelve la actualizacion de la coleccion de documentos en tiempo real
+// Se maneja los eventos de manera asincrona con el callback y se ejecuta al final.
 export const onGetPosts = (callback) => onSnapshot(collection(db, 'posts'), callback);
 
 export const deletePost = (id) => deleteDoc(doc(db, 'posts', id));
