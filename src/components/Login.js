@@ -3,6 +3,7 @@ import { expresions, allInputs, validateInput } from '../lib/validate-inputs.js'
 import background2 from '../media/background-2.png';
 import { loginWithEmail } from '../firebase/auth.js';
 
+// Fx para validar el contenito de los inputs
 const validFormLogin = (e) => {
   switch (e.target.name) {
     case 'email':
@@ -12,7 +13,6 @@ const validFormLogin = (e) => {
       validateInput(expresions.password, e.target, 'password');
       break;
     default:
-      // console.log('default');
   }
 };
 
@@ -96,17 +96,19 @@ export const Login = (onNavigate) => {
       });
   }
 
+  // Fx que valida los inputs y permite iniciar sesión si...
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    // El valor de los inputs es verdadero
     if (allInputs.email && allInputs.password) {
       userLogin();
     } else {
-      // console.log('Revisa tus datos');
+      // Si es falso, se envía una alerta
+      alert('Por favor, revisa tus datos.');
     }
   });
 
   // cambiando el background de root
-  // document.getElementById('root').classList.replace('root-background1', 'root-background2');
   document.getElementById('root').style.backgroundImage = `linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(${background2})`;
   document.getElementById('root').style.backgroundRepeat = 'repeat';
   document.getElementById('root').style.backgroundSize = '300px';
