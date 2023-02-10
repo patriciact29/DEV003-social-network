@@ -56,12 +56,12 @@ export const Home = (onNavigate) => {
   // para crear post
   let editStatus = false;
   let id = '';
-
+  // trae los datos de la base de datos y luego ejecuta el querySnapshot
   onGetPosts((querySnapshot) => {
     let html = '';
-
-    querySnapshot.forEach((doc) => {
-      const inputPosts = doc.data();
+    // querySnapshot realizamos la impresion y escucha en tiempo real.
+    querySnapshot.forEach((doc) => { // se ejecuta en cada post...
+      const inputPosts = doc.data(); // doc.data = c/u de los post con su id
       html += `
         <div class = 'containerPost home'>
           <div class="optionsMenu">   
@@ -76,69 +76,53 @@ export const Home = (onNavigate) => {
 
     // la fx del botón para eliminar post
     divAllPost.innerHTML = html;
+    // la fx se aplica a c/u de los botones de los post
     const btnsDelete = divAllPost.querySelectorAll('.btn-delete');
     btnsDelete.forEach((btn) => {
       btn.addEventListener('click', ({ target: { dataset } }) => {
         const confirmDelete = confirm('¿Segura que deseas eliminar este post?');
+        // si el usuario confirma...
         if (confirmDelete) {
-          deletePost(dataset.id);
+          deletePost(dataset.id); // se elimina con la fx q se trae de f/firestore
         }
       });
     });
 
     // la fx del botón para editar post
+    // la fx se aplica a c/u de los botones de los post
     const btnsEdit = divAllPost.querySelectorAll('.btn-edit');
     btnsEdit.forEach((btn) => {
-      btn.addEventListener('click', async (e) => {
-        try {
-          const doc = await getPost(e.target.dataset.id);
-          const post = doc.data();
-          formNewPost.inputPost.value = post.post;
-
-          editStatus = true;
-          id = doc.id;
-          formNewPost.buttonPost.innerText = 'Actualizar';
-        } catch (error) {
-          // console.log(error);
-        }
+      btn.addEventListener('click', async (e) => { // se escucha la promesa del e...
+        const doc = await getPost(e.target.dataset.id); // se trae la publicacion segun su id
+        const post = doc.data();
+        // se trae el texto del post a editar en el input para actualizar
+        formNewPost.inputPost.value = post.post;
+        editStatus = true;
+        id = doc.id;
+        formNewPost.buttonPost.innerText = 'Actualizar';
       });
     });
-
-    // Menu opciones
-    const optionsMenu = divAllPost.querySelector('.optionsMenu');
-    const options = divAllPost.querySelector('.hide');
-
-    function showOptions() {
-      options.classList.replace('hide', 'showOptions');
-    }
-    optionsMenu.addEventListener('click', showOptions);
   });
 
-  // ejecutando lo que se desee hacer (guardar nuevo post o editar actulizar post existente)
-  formNewPost.addEventListener('submit', /* async */ (e) => {
+  // ejecutando lo que se desee hacer (crear o editar post)
+  formNewPost.addEventListener('submit', (e) => {
     e.preventDefault();
-
-    try {
-      // restrigimos que el input este vacio (no se ejecuta la fx)
-      if (inputPost.value !== '') {
-        // si el status es falseo entoces...
-        if (!editStatus) {
-          // se publica un nuevo post
-          savePost(inputPost.value);
-        } else {
-          // sino, se actualizará el post existente
-          updatePost(id, {
-            post: inputPost.value,
-          });
-          editStatus = false;
-          id = '';
-          formNewPost.buttonPost.innerText = 'Publicar';
-        }
-
-        formNewPost.reset(); // formatea formulario
+    // restrigimos que el input este vacio (no se ejecuta la fx)
+    if (inputPost.value !== '') {
+      // si el status es falseo entoces...
+      if (!editStatus) {
+        // se publica un nuevo post
+        savePost(inputPost.value);
+      } else {
+        // sino, se actualizará el post existente
+        updatePost(id, {
+          post: inputPost.value,
+        });
+        editStatus = false;
+        id = '';
+        formNewPost.buttonPost.innerText = 'Publicar';
       }
-    } catch (error) {
-      // console.log(error);
+      formNewPost.reset(); // formatea formulario
     }
   });
 
