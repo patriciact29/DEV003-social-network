@@ -1,6 +1,6 @@
 import { informationUser, logout } from '../firebase/auth.js';
 import {
-  deletePost, onGetPosts, savePost, getPost, updatePost,
+  deletePost, onGetPosts, savePost, getPost, updatePost, q,
 } from '../firebase/firestore.js';
 
 export const Home = (onNavigate) => {
