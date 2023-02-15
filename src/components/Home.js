@@ -73,12 +73,27 @@ export const Home = (onNavigate) => {
         hour: '2-digit',
         minute: '2-digit',
       });
+
+      let likeIcon = '';
+      if (inputPosts.like.includes(currentUserUid)) {
+        likeIcon = 'fa-solid';
+      } else {
+        likeIcon = 'fa-regular';
+      }
+
+      let userName = inputPosts.user;
+      if (userName === null) {
+        console.log('No tiene nombre de usuario');
+        userName = inputPosts.userEmail;
+        console.log(inputPosts.user, inputPosts.userEmail);
+      }
+
       if (currentUserUid === postUserUid) {
         html += `
         <div class = 'containerPost home'>
           <div>
           <div class="info">   
-            <p>${inputPosts.user}</p>
+            <p>${userName}</p>
             <p>${formattedDate}</p>
           </div>
             <div class="optionsMenu">   
@@ -87,18 +102,18 @@ export const Home = (onNavigate) => {
             </div>
           </div>
           <p>${inputPosts.post}</p>
-          <button data-id="${doc.id}" class="buttonLike"><p data-id='${doc.id}'>${inputPosts.like.length}</p><i class='fa-solid fa-heart'></i></button>
+          <button data-id="${doc.id}" class="buttonLike"><p data-id='${doc.id}'>${inputPosts.like.length}</p><i class='${likeIcon} fa-thumbs-up'></i></button>
         </div>
   `;
       } else {
         html += `
         <div class = 'containerPost home'>
          <div class="info">   
-            <p>${inputPosts.user}</p>
+            <p>${userName}</p>
             <p>${formattedDate}</p>
          </div>
           <p>${inputPosts.post}</p>
-          <button data-id="${doc.id}" class="buttonLike"><p data-id='${doc.id}'>${inputPosts.like.length}</p><i class='fa-solid fa-heart'></i></button>
+          <button data-id="${doc.id}" class="buttonLike"><p data-id='${doc.id}'>${inputPosts.like.length}</p><i class='${likeIcon} fa-thumbs-up'></i></button>
           
         </div>
       `;
@@ -113,10 +128,10 @@ export const Home = (onNavigate) => {
     console.log(btnLikes);
     btnLikes.forEach((btnLike) => {
       btnLike.addEventListener('click', () => {
-        const likedButton = btnLike.dataset.id; // undefined
-        console.log(likedButton);
-        const userUid = auth.currentUser.uid; // OK
-        console.log(userUid);
+        const likedButton = btnLike.dataset.id;
+        console.log(likedButton); // OK
+        const userUid = auth.currentUser.uid;
+        console.log(userUid); // OK
         getPost(likedButton)
           .then((doclike) => {
             const userLike = doclike.data().like;
