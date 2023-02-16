@@ -16,6 +16,7 @@ export const allInputs = {
 
 // Fx que valida el input si cumple con el formato de la expresión, si...
 const validateInput = (expresion, input, element) => {
+  console.log("llego aqui?")
   // Se compara la expresión con el contenido del input
   if (expresion.test(input.value)) {
     // Entonces se llama al msj de error por ID, para cambiar su clase y ocultarlo
