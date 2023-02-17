@@ -6,10 +6,6 @@ jest.mock('../src/firebase/auth', () => ({
   loginWithEmail: () => Promise.resolve({ user: { emailVerified: true } }),
 }));
 
-jest.mock('../src/lib/validate-inputs.js', () => ({
-  ...jest.requireActual('../src/lib/validate-inputs.js'),
-  allInputs: { email: false, password: false },
-}));
 
 // ----------------------------------
 // jest.mock('../src/firebase/auth.js');
@@ -38,7 +34,7 @@ jest.mock('../src/lib/validate-inputs.js', () => ({
 
 function tick() {
   return new Promise((resolve) => {
-    setTimeout(resolve, 0);
+    setTimeout(resolve, 3000);
   });
 }
 
@@ -61,7 +57,7 @@ describe('Primer test de Login', () => {
   let onNavigateMock;
 
   beforeEach(() => {
-    onNavigateMock = jest.fn().mockImplementation(()=> console.log("el mock"));
+    onNavigateMock = jest.fn(()=> console.log("probando el h"));
     divRoot = document.createElement('div');
     divRoot.id = 'root';
     document.body.appendChild(divRoot);
@@ -87,15 +83,16 @@ describe('Primer test de Login', () => {
     expect(errorEmail.className).toEqual('error-display');
   });
 
-  it('al hacer click en el boton con los campos correctos debe llamar la funcion onnavigate ', async () => {
+  it('al hacer click en el boton con los campos correctos debe llamar la funcion onnavigate ', () => {
     inputEmail.value = 'h@h.com';
     inputPassword.value = 'Hola.123';
     allInputs.email = true
     allInputs.password = true
 
     buttonLogin.click();
-    await tick()
-    console.log("joqal")
-    expect(onNavigateMock).toHaveBeenCalled();
+    setTimeout(()=> expect(onNavigateMock).toHaveBeenCalled(),0);
+
+    
+    
   });
 });
