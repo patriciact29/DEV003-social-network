@@ -18,6 +18,7 @@ export const savePost = (post) => {
     post,
     userUid: userId.uid,
     user: userId.displayName,
+    userEmail: userId.email,
     createdAt: serverTimestamp(),
     // Time stamp, ordenar posts
     like: [],
@@ -33,9 +34,6 @@ export const addLikePost = (id, uidCurrentUser) => {
 export const removeLikePost = (id, uidCurrentUser) => {
   updateDoc(doc(db, 'posts', id), { like: arrayRemove(uidCurrentUser) });
 };
-
-// no sabemos por qué esta aquí...
-// export const getPosts = () => getDocs(collection(db, 'posts'));
 
 // onSnapShot fx desde firestore
 // onSnapshot = devuelve la actualizacion de la coleccion de documentos en tiempo real
