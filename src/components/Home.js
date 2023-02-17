@@ -1,6 +1,6 @@
 import { auth, logout } from '../firebase/auth.js';
 import {
-  deletePost, onGetPosts, savePost, getPost, updatePost,
+  deletePost, onGetPosts, savePost, getPost, updatePost, removeLikePost, addLikePost,
 } from '../firebase/firestore.js';
 
 export const Home = (onNavigate) => {
@@ -73,38 +73,79 @@ export const Home = (onNavigate) => {
         hour: '2-digit',
         minute: '2-digit',
       });
+
+      let likeIcon = '';
+      if (inputPosts.like.includes(currentUserUid)) {
+        likeIcon = 'fa-solid';
+      } else {
+        likeIcon = 'fa-regular';
+      }
+
+      let userName = inputPosts.user;
+      if (userName === null) {
+        console.log('No tiene nombre de usuario');
+        userName = inputPosts.userEmail;
+        console.log(inputPosts.user, inputPosts.userEmail);
+      }
+
       if (currentUserUid === postUserUid) {
         html += `
         <div class = 'containerPost home'>
           <div>
           <div class="info">   
-            <p>${inputPosts.user}</p>
+            <p>${userName}</p>
             <p>${formattedDate}</p>
-         </div>
+          </div>
             <div class="optionsMenu">   
               <button class='btn-delete' data-id="${doc.id}"> <i class="fa-solid fa-trash"></i> Eliminar</button>
               <button class='btn-edit' data-id="${doc.id}"> <i class="fa-solid fa-pen"></i> Editar</button>
             </div>
           </div>
-        <p>${inputPosts.post}</p>
+          <p>${inputPosts.post}</p>
+          <button data-id="${doc.id}" class="buttonLike"><p data-id='${doc.id}'>${inputPosts.like.length}</p><i class='${likeIcon} fa-thumbs-up'></i></button>
         </div>
   `;
       } else {
         html += `
         <div class = 'containerPost home'>
-        <div class="info">   
-            <p>${inputPosts.user}</p>
+         <div class="info">   
+            <p>${userName}</p>
             <p>${formattedDate}</p>
+         </div>
+          <p>${inputPosts.post}</p>
+          <button data-id="${doc.id}" class="buttonLike"><p data-id='${doc.id}'>${inputPosts.like.length}</p><i class='${likeIcon} fa-thumbs-up'></i></button>
+          
         </div>
-        <p>${inputPosts.post}</p>
-      </div>
       `;
       }
     });
 
     // la fx del botón para eliminar post
     divAllPost.innerHTML = html;
-    // la fx se aplica a c/u de los botones de los post
+
+    // funcionalidad del botón like
+    const btnLikes = divAllPost.querySelectorAll('.buttonLike');
+    console.log(btnLikes);
+    btnLikes.forEach((btnLike) => {
+      btnLike.addEventListener('click', () => {
+        const likedButton = btnLike.dataset.id;
+        console.log(likedButton); // OK
+        const userUid = auth.currentUser.uid;
+        console.log(userUid); // OK
+        getPost(likedButton)
+          .then((doclike) => {
+            const userLike = doclike.data().like;
+            if (userLike.includes(userUid)) {
+              removeLikePost(likedButton, userUid);
+            } else {
+              addLikePost(likedButton, userUid);
+            }
+          }).catch((error) => {
+            console.log(error);
+          });
+      });
+    });
+
     const btnsDelete = divAllPost.querySelectorAll('.btn-delete');
     btnsDelete.forEach((btn) => {
       btn.addEventListener('click', ({ target: { dataset } }) => {
