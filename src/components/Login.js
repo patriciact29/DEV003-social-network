@@ -86,9 +86,10 @@ export const Login = (onNavigate) => {
           // entonces se alerta al usuario
           alert('Email no verificado, se le envió un correo de verificación');
         } else {
-          console.log("entro aqui")
+          console.log("hola",onNavigate)
           // si no (si esta verificado) se envia al usuario al home
           onNavigate('/home');
+          console.log("test")
         }
       }) // si no logra iniciar sesión, envía una alerta de error
       .catch((error) => {
@@ -100,11 +101,10 @@ export const Login = (onNavigate) => {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     // El valor de los inputs es verdadero
+    console.log(allInputs.email)
     if (allInputs.email && allInputs.password) {
-      console.log("entro")
       userLogin();
     } else {
-      console.log("else")
       // Si es falso, se envía una alerta
       alert('Por favor, revisa tus datos.');
     }

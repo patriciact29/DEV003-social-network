@@ -75,6 +75,7 @@ export const validForm = (e) => {
 
 export // Fx para validar el contenito de los inputs
 const validFormLogin = (e) => {
+  console.log("hola")
   switch (e.target.name) {
     case 'email':
       validateInput(expresions.email, e.target, 'email');
