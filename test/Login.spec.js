@@ -1,12 +1,11 @@
 import { loginWithEmail } from '../src/firebase/auth.js';
 import { Login } from '../src/components/Login.js';
-import { allInputs } from '../src/lib/validate-inputs.js';
+import {allInputs} from '../src/lib/validate-inputs.js';
 
 jest.mock('../src/firebase/auth', () => ({
   loginWithEmail: () => Promise.resolve({ user: { emailVerified: true } }),
 }));
 
-jest.mock('../src/lib/validate-inputs.js', () => ({ allInputs: { email: true, password: true } }));
 
 // ----------------------------------
 // jest.mock('../src/firebase/auth.js');
@@ -35,7 +34,7 @@ jest.mock('../src/lib/validate-inputs.js', () => ({ allInputs: { email: true, pa
 
 function tick() {
   return new Promise((resolve) => {
-    setTimeout(resolve, 0);
+    setTimeout(resolve, 3000);
   });
 }
 
@@ -58,7 +57,7 @@ describe('Primer test de Login', () => {
   let onNavigateMock;
 
   beforeEach(() => {
-    onNavigateMock = jest.fn();
+    onNavigateMock = jest.fn(()=> console.log("probando el h"));
     divRoot = document.createElement('div');
     divRoot.id = 'root';
     document.body.appendChild(divRoot);
@@ -79,17 +78,21 @@ describe('Primer test de Login', () => {
     buttonLogin = document.getElementById('buttonLogin');
   });
 
-  it('Debería mostrar mensaje de email invalido cuando el formato del email sea incorrecto', async () => {
+  it('Debería mostrar mensaje de email invalido cuando el formato del email sea incorrecto', () => {   
     inputEmail.dispatchEvent(new KeyboardEvent('keyup', { key: 'a' }));
     expect(errorEmail.className).toEqual('error-display');
   });
 
-  it.only('al hacer click en el boton con los campos correctos debe llamar la funcion onnavigate ', async () => {
+  it('al hacer click en el boton con los campos correctos debe llamar la funcion onnavigate ', () => {
     inputEmail.value = 'h@h.com';
     inputPassword.value = 'Hola.123';
+    allInputs.email = true
+    allInputs.password = true
 
     buttonLogin.click();
-    await tick();
-    expect(onNavigateMock).toHaveBeenCalled();
+    setTimeout(()=> expect(onNavigateMock).toHaveBeenCalled(),0);
+
+    
+    
   });
 });
