@@ -42,9 +42,6 @@ export const Home = (onNavigate) => {
   buttonLogout.textContent = 'Cerrar sesión';
   buttonPost.textContent = 'Publicar';
 
-  // // opción 2
-  // informationUser();
-
   // el botón ejecuta la fx logout para cerrar sesión
   buttonLogout.addEventListener('click', logout);
   // el botón ejecuta la fx que nos lleva a Welcome
@@ -64,7 +61,6 @@ export const Home = (onNavigate) => {
       const inputPosts = doc.data(); // doc.data = c/u de los post con su id
       const currentUserUid = auth.currentUser.uid;
       const postUserUid = inputPosts.userUid;
-      // console.log(currentUserUid, postUserUid);
       const postDate = inputPosts.createdAt.toDate();
       const formattedDate = postDate.toLocaleDateString('es-ES', {
         day: '2-digit',
@@ -83,9 +79,7 @@ export const Home = (onNavigate) => {
 
       let userName = inputPosts.user;
       if (userName === null) {
-        console.log('No tiene nombre de usuario');
         userName = inputPosts.userEmail;
-        console.log(inputPosts.user, inputPosts.userEmail);
       }
 
       if (currentUserUid === postUserUid) {
@@ -125,13 +119,10 @@ export const Home = (onNavigate) => {
 
     // funcionalidad del botón like
     const btnLikes = divAllPost.querySelectorAll('.buttonLike');
-    console.log(btnLikes);
     btnLikes.forEach((btnLike) => {
       btnLike.addEventListener('click', () => {
         const likedButton = btnLike.dataset.id;
-        console.log(likedButton); // OK
         const userUid = auth.currentUser.uid;
-        console.log(userUid); // OK
         getPost(likedButton)
           .then((doclike) => {
             const userLike = doclike.data().like;
@@ -141,7 +132,7 @@ export const Home = (onNavigate) => {
               addLikePost(likedButton, userUid);
             }
           }).catch((error) => {
-            console.log(error);
+            alert(error);
           });
       });
     });

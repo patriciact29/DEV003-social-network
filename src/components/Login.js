@@ -1,5 +1,3 @@
-// import loginImg from '../media/login-img.png';
-// import background2 from '../media/background-2.png';
 import { allInputs, validFormLogin } from '../lib/validate-inputs.js';
 import { loginWithEmail } from '../firebase/auth.js';
 
@@ -74,22 +72,18 @@ export const Login = (onNavigate) => {
   function userLogin() {
     const email = inputEmail.value;
     const password = inputPassword.value;
-    console.log('hola');
     // trayendo fx desde f/auth para iniciar sesión
     loginWithEmail(email, password)
       // si se cumple la promesa entonces...
       .then((result) => {
-        console.log(result);
         const user = result.user;
         // revisa si el correo no esta verificado
         if (user.emailVerified === false) {
           // entonces se alerta al usuario
           alert('Email no verificado, se le envió un correo de verificación');
         } else {
-          console.log('hola', onNavigate);
           // si no (si esta verificado) se envia al usuario al home
           onNavigate('/home');
-          console.log('test');
         }
       }) // si no logra iniciar sesión, envía una alerta de error
       .catch((error) => {
@@ -101,7 +95,6 @@ export const Login = (onNavigate) => {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     // El valor de los inputs es verdadero
-    console.log(allInputs.email);
     if (allInputs.email && allInputs.password) {
       userLogin();
     } else {
