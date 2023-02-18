@@ -4,16 +4,18 @@ import {
 } from '../firebase/firestore.js';
 
 export const Home = (onNavigate) => {
+  const home = document.createElement('div');
   const menuBg = document.createElement('div');
   const divIconMenu = document.createElement('div');
   const iconMenu = document.createElement('i');
   const header = document.createElement('header');
   const title = document.createElement('p');
+  const containerAll = document.createElement('section');
   const nav = document.createElement('nav');
   const buttonHome = document.createElement('button');
   const buttonProfile = document.createElement('button');
   const buttonLogout = document.createElement('button');
-  const home = document.createElement('div');
+  const containerAll2 = document.createElement('section');
   const formNewPost = document.createElement('form');
   const inputPost = document.createElement('input');
   const buttonPost = document.createElement('button');
@@ -24,10 +26,12 @@ export const Home = (onNavigate) => {
   divIconMenu.setAttribute('id', 'btn-menu');
   iconMenu.setAttribute('class', 'fa-sharp fa-solid fa-bars');
   header.setAttribute('class', 'header');
+  containerAll.setAttribute('class', 'containerAll');
   nav.setAttribute('class', 'hide');
   buttonHome.setAttribute('class', 'buttonHome');
   buttonProfile.setAttribute('class', 'buttonProfile');
   buttonLogout.setAttribute('class', 'buttonLogout');
+  containerAll2.setAttribute('class', 'containerAll2');
   formNewPost.setAttribute('id', 'formNewPost');
   formNewPost.setAttribute('class', 'containerNewPost home');
   divAllPost.setAttribute('id', 'allPost');
@@ -87,7 +91,7 @@ export const Home = (onNavigate) => {
         <div class = 'containerPost home'>
           <div>
           <div class="info">   
-            <p>${userName}</p>
+            <h3>${userName}</h3>
             <p>${formattedDate}</p>
           </div>
             <div class="optionsMenu">   
@@ -96,18 +100,18 @@ export const Home = (onNavigate) => {
             </div>
           </div>
           <p>${inputPosts.post}</p>
-          <button data-id="${doc.id}" class="buttonLike"><p data-id='${doc.id}'>${inputPosts.like.length}</p><i class='${likeIcon} fa-thumbs-up'></i></button>
+          <button data-id="${doc.id}" class="buttonLike"><p data-id='${doc.id}'>${inputPosts.like.length}</p><i class='${likeIcon} fa-heart'></i></button>
         </div>
   `;
       } else {
         html += `
         <div class = 'containerPost home'>
          <div class="info">   
-            <p>${userName}</p>
+            <h3>${userName}</h3>
             <p>${formattedDate}</p>
          </div>
           <p>${inputPosts.post}</p>
-          <button data-id="${doc.id}" class="buttonLike"><p data-id='${doc.id}'>${inputPosts.like.length}</p><i class='${likeIcon} fa-thumbs-up'></i></button>
+          <button data-id="${doc.id}" class="buttonLike"><p data-id='${doc.id}'>${inputPosts.like.length}</p><i class='${likeIcon} fa-heart'></i></button>
           
         </div>
       `;
@@ -205,10 +209,12 @@ export const Home = (onNavigate) => {
   // mostrando elementos
   formNewPost.append(inputPost, buttonPost);
   divIconMenu.append(iconMenu);
-  header.append(divIconMenu, title, nav);
+  header.append(divIconMenu, title);
   nav.append(buttonHome, buttonProfile, buttonLogout);
+  containerAll2.append(formNewPost, divAllPost);
+  containerAll.append(nav, containerAll2);
 
   // divAllPost.append(divPost);
-  home.append(menuBg, header, formNewPost, divAllPost);
+  home.append(menuBg, header, containerAll);
   return home;
 };
