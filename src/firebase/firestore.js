@@ -1,6 +1,6 @@
 import {
   getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc,
-  getDoc, updateDoc, setDoc, serverTimestamp, query, orderBy,
+  getDoc, updateDoc, setDoc, serverTimestamp, query, orderBy, arrayUnion, arrayRemove,
 } from 'firebase/firestore';
 import { auth } from './auth.js';
 import { app as firebase } from './firebase-config.js';
@@ -18,13 +18,22 @@ export const savePost = (post) => {
     post,
     userUid: userId.uid,
     user: userId.displayName,
+    userEmail: userId.email,
     createdAt: serverTimestamp(),
     // Time stamp, ordenar posts
+    like: [],
   });
 };
 
-// no sabemos por qué esta aquí...
-// export const getPosts = () => getDocs(collection(db, 'posts'));
+// agregar y quitar like
+
+export const addLikePost = (id, uidCurrentUser) => {
+  updateDoc(doc(db, 'posts', id), { like: arrayUnion(uidCurrentUser) });
+};
+
+export const removeLikePost = (id, uidCurrentUser) => {
+  updateDoc(doc(db, 'posts', id), { like: arrayRemove(uidCurrentUser) });
+};
 
 // onSnapShot fx desde firestore
 // onSnapshot = devuelve la actualizacion de la coleccion de documentos en tiempo real

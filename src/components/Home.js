@@ -1,19 +1,21 @@
 import { auth, logout } from '../firebase/auth.js';
 import {
-  deletePost, onGetPosts, savePost, getPost, updatePost,
+  deletePost, onGetPosts, savePost, getPost, updatePost, removeLikePost, addLikePost,
 } from '../firebase/firestore.js';
 
 export const Home = (onNavigate) => {
+  const home = document.createElement('div');
   const menuBg = document.createElement('div');
   const divIconMenu = document.createElement('div');
   const iconMenu = document.createElement('i');
   const header = document.createElement('header');
   const title = document.createElement('p');
+  const containerAll = document.createElement('section');
   const nav = document.createElement('nav');
   const buttonHome = document.createElement('button');
   const buttonProfile = document.createElement('button');
   const buttonLogout = document.createElement('button');
-  const home = document.createElement('div');
+  const containerAll2 = document.createElement('section');
   const formNewPost = document.createElement('form');
   const inputPost = document.createElement('input');
   const buttonPost = document.createElement('button');
@@ -24,10 +26,12 @@ export const Home = (onNavigate) => {
   divIconMenu.setAttribute('id', 'btn-menu');
   iconMenu.setAttribute('class', 'fa-sharp fa-solid fa-bars');
   header.setAttribute('class', 'header');
+  containerAll.setAttribute('class', 'containerAll');
   nav.setAttribute('class', 'hide');
   buttonHome.setAttribute('class', 'buttonHome');
   buttonProfile.setAttribute('class', 'buttonProfile');
   buttonLogout.setAttribute('class', 'buttonLogout');
+  containerAll2.setAttribute('class', 'containerAll2');
   formNewPost.setAttribute('id', 'formNewPost');
   formNewPost.setAttribute('class', 'containerNewPost home');
   divAllPost.setAttribute('id', 'allPost');
@@ -41,9 +45,6 @@ export const Home = (onNavigate) => {
   buttonProfile.textContent = 'Mi Perfil';
   buttonLogout.textContent = 'Cerrar sesión';
   buttonPost.textContent = 'Publicar';
-
-  // // opción 2
-  // informationUser();
 
   // el botón ejecuta la fx logout para cerrar sesión
   buttonLogout.addEventListener('click', logout);
@@ -64,7 +65,6 @@ export const Home = (onNavigate) => {
       const inputPosts = doc.data(); // doc.data = c/u de los post con su id
       const currentUserUid = auth.currentUser.uid;
       const postUserUid = inputPosts.userUid;
-      // console.log(currentUserUid, postUserUid);
       const postDate = inputPosts.createdAt.toDate();
       const formattedDate = postDate.toLocaleDateString('es-ES', {
         day: '2-digit',
@@ -73,38 +73,74 @@ export const Home = (onNavigate) => {
         hour: '2-digit',
         minute: '2-digit',
       });
+
+      let likeIcon = '';
+      if (inputPosts.like.includes(currentUserUid)) {
+        likeIcon = 'fa-solid';
+      } else {
+        likeIcon = 'fa-regular';
+      }
+
+      let userName = inputPosts.user;
+      if (userName === null) {
+        userName = inputPosts.userEmail;
+      }
+
       if (currentUserUid === postUserUid) {
         html += `
         <div class = 'containerPost home'>
           <div>
           <div class="info">   
-            <p>${inputPosts.user}</p>
+            <h3>${userName}</h3>
             <p>${formattedDate}</p>
-         </div>
+          </div>
             <div class="optionsMenu">   
               <button class='btn-delete' data-id="${doc.id}"> <i class="fa-solid fa-trash"></i> Eliminar</button>
               <button class='btn-edit' data-id="${doc.id}"> <i class="fa-solid fa-pen"></i> Editar</button>
             </div>
           </div>
-        <p>${inputPosts.post}</p>
+          <p>${inputPosts.post}</p>
+          <button data-id="${doc.id}" class="buttonLike"><p data-id='${doc.id}'>${inputPosts.like.length}</p><i class='${likeIcon} fa-heart'></i></button>
         </div>
   `;
       } else {
         html += `
         <div class = 'containerPost home'>
-        <div class="info">   
-            <p>${inputPosts.user}</p>
+         <div class="info">   
+            <h3>${userName}</h3>
             <p>${formattedDate}</p>
+         </div>
+          <p>${inputPosts.post}</p>
+          <button data-id="${doc.id}" class="buttonLike"><p data-id='${doc.id}'>${inputPosts.like.length}</p><i class='${likeIcon} fa-heart'></i></button>
+          
         </div>
-        <p>${inputPosts.post}</p>
-      </div>
       `;
       }
     });
 
     // la fx del botón para eliminar post
     divAllPost.innerHTML = html;
-    // la fx se aplica a c/u de los botones de los post
+
+    // funcionalidad del botón like
+    const btnLikes = divAllPost.querySelectorAll('.buttonLike');
+    btnLikes.forEach((btnLike) => {
+      btnLike.addEventListener('click', () => {
+        const likedButton = btnLike.dataset.id;
+        const userUid = auth.currentUser.uid;
+        getPost(likedButton)
+          .then((doclike) => {
+            const userLike = doclike.data().like;
+            if (userLike.includes(userUid)) {
+              removeLikePost(likedButton, userUid);
+            } else {
+              addLikePost(likedButton, userUid);
+            }
+          }).catch((error) => {
+            alert(error);
+          });
+      });
+    });
+
     const btnsDelete = divAllPost.querySelectorAll('.btn-delete');
     btnsDelete.forEach((btn) => {
       btn.addEventListener('click', ({ target: { dataset } }) => {
@@ -173,10 +209,12 @@ export const Home = (onNavigate) => {
   // mostrando elementos
   formNewPost.append(inputPost, buttonPost);
   divIconMenu.append(iconMenu);
-  header.append(divIconMenu, title, nav);
+  header.append(divIconMenu, title);
   nav.append(buttonHome, buttonProfile, buttonLogout);
+  containerAll2.append(formNewPost, divAllPost);
+  containerAll.append(nav, containerAll2);
 
   // divAllPost.append(divPost);
-  home.append(menuBg, header, formNewPost, divAllPost);
+  home.append(menuBg, header, containerAll);
   return home;
 };
