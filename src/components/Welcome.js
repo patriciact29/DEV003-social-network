@@ -1,9 +1,11 @@
 import logoBlanco from '../media/logo-blanco-fems-viajando-juntas.png';
 import logoColores from '../media/logo-fems-viajando-juntas.png';
-import logoGoogle from '../media/logo-google.png';
+// import logoGoogle from '../media/logo-google.png';
 import background1 from '../media/background-1.jpg';
 import { loginWithGoogle } from '../firebase/auth.js';
 import { saveUser } from '../firebase/firestore';
+import googleImg1 from '../media/btn_google_signin_light_normal_web@2x.png';
+import googleImg2 from '../media/btn_google_signin_light_pressed_web@2x.png';
 
 export const Welcome = (onNavigate) => {
   const div = document.createElement('div');
@@ -14,8 +16,12 @@ export const Welcome = (onNavigate) => {
   const buttonSignup = document.createElement('button');
   const buttonGoogle = document.createElement('div');
   const imgGoogle = document.createElement('img');
-  const txtGoogle = document.createElement('span');
-
+  imgGoogle.onmouseout = () => {
+    imgGoogle.src = googleImg1;
+  };
+  imgGoogle.onmouseover = () => {
+    imgGoogle.src = googleImg2;
+  };
   div.setAttribute('class', 'containerWelcome');
   div2.setAttribute('class', 'div2');
   logo.setAttribute('src', logoBlanco);
@@ -25,8 +31,8 @@ export const Welcome = (onNavigate) => {
   logoColor.setAttribute('class', 'logo-color');
   buttonLogin.setAttribute('class', 'none');
   buttonSignup.setAttribute('class', 'none');
-  buttonGoogle.setAttribute('class', 'google none');
-  imgGoogle.setAttribute('src', logoGoogle);
+  buttonGoogle.setAttribute('class', 'googleButton');
+  imgGoogle.setAttribute('src', googleImg1);
 
   div2.append(logoColor, buttonLogin, buttonSignup, buttonGoogle);
 
@@ -43,8 +49,7 @@ export const Welcome = (onNavigate) => {
   });
 
   // Se crea el contenido del botón y se le agrega funcionalidad que inicia sesión con google
-  txtGoogle.textContent = 'Continuar con Google';
-  buttonGoogle.append(imgGoogle, txtGoogle);
+  buttonGoogle.append(imgGoogle);
   buttonGoogle.addEventListener('click', () => {
     loginWithGoogle() // Fx traida desde f/auth
       .then((result) => {
@@ -80,6 +85,8 @@ export const Welcome = (onNavigate) => {
   descriptionContentModal.textContent = 'Fems es un espacio seguro solo para mujeres donde podrás compartir experiencias e información sobre viajes.';
   closeModal.append(iconModal);
   descriptionContainerModal.append(descriptionContentModal, closeModal);
+
+  document.getElementById('footerHTML').style.display = 'block';
 
   // cambiando el background de root
   document.getElementById('root').style.backgroundImage = `linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(${background1})`;
