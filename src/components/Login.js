@@ -103,7 +103,7 @@ export const Login = (onNavigate) => {
     }
   });
 
-  document.getElementById('footerHTML').style.display = 'block';
+  // document.getElementById('footerHTML').style.display = 'block';
 
   // cambiando el background de root
   document.getElementById('root').style.backgroundImage = 'linear-gradient(rgba(154,84,160,0.5), rgba(255, 168, 0, 0.5)), url(https://github.com/alextina/DEV003-social-network/blob/main/src/media/background-2.png?raw=true)';
