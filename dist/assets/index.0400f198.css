@@ -11,7 +11,7 @@ body{
 }
 
 #root{
-    height: 100vh;
+    height:100vh;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -55,18 +55,29 @@ body{
     display: none;
 }
 
-.googleButton{
-    height: auto;
+.google{
     margin: 1rem;
-    border: none;
-    cursor: pointer;
-    display: none;
-}
-
-.googleButton img{
+    padding: 0.8rem 0;
+    font-size: 1.5rem;
     width: 20rem;
+    height: auto;
+    border-radius: 2rem;
+    cursor: pointer;
+    border: 0;
+    box-shadow: 0 1px 2px rgba(40,40, 40, 0.5);
+    text-align: center;
+    background-color: white;
 }
 
+.google img{
+    width: 2rem;
+    margin-right: 1rem;
+}
+
+.google span{
+    font-size: 1.5rem;
+    font-family:'Roboto', Arial, Helvetica, sans-serif;
+}
 /* form view */
 .error{
     display: none;
@@ -205,22 +216,16 @@ h2{
 }
 
 footer{
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    /* position: fixed;
+    bottom: 0; */
     padding: var(--element-padding);
     text-align: center;
     background-color: rgba(255, 255, 255, 0.5);
     width: 100%;
-    height: auto;
+    display: none;
 }
 
 footer p{
-    font-size: 1.2rem;
-    color: #282828;
-}
-
-footer a{
     font-size: 1.2rem;
     color: #282828;
 }
@@ -251,7 +256,7 @@ footer a{
 }
 
 .header {
-    background-image: linear-gradient(rgba(255, 168, 0, 0.5), rgba(154,84,160,0.75)),url(./media/background-2.png);
+    background-image: linear-gradient(rgba(255, 168, 0, 0.5), rgba(154,84,160,0.75)),url(/assets/background-2.74171009.png);
     background-repeat: repeat;
     background-size: 30rem;
     width: 100%;
@@ -267,7 +272,6 @@ footer a{
     text-shadow: 0 1px 2px rgba(40,40, 40, 0.5);
     margin: 2rem;
 }
-
 .containerAll2 {
     display: flex;
     flex-direction: column;
@@ -433,7 +437,6 @@ display: none;
     border: 0;
 
 }
-
 .buttonLike {
     background: rgba(244, 244, 244, 0.75);
     color: var(--main-color);
@@ -504,9 +507,11 @@ display: none;
         display: block;
     }
 
-    .googleButton{
+    .google{
+        background-color: #EBEBEB;
         display: block;
-    } 
+        width: 25rem;
+    }
 
     .containerWelcome button{
         background-color: #EBEBEB;
@@ -551,7 +556,6 @@ display: none;
         object-fit: cover;
        
     }
-
     .login{
         margin-left:0%;
         margin-top: 0%;
@@ -563,8 +567,7 @@ display: none;
         gap:2rem;  
         box-shadow: 0 5px 20px rgba(40,40, 40, 0.5);
     }
-
-    /* Formato de home  */
+   /* Formato de home  */
     .header {
         display: flex;
         justify-content: flex-end;
@@ -574,7 +577,6 @@ display: none;
    #btn-menu {
         display: none;
     }
-
     .hide{
         width: 15%;
         padding: 2rem;
@@ -585,7 +587,6 @@ display: none;
         align-items: center;
         border-right:1px solid rgba(28, 28, 28, 0.25);
     }
-
     .hide button {
         text-align: left ;
         color: #282828;
@@ -608,29 +609,19 @@ display: none;
         display: flex;
         flex-direction: row;
     }
-
     .info h3 {
         font-size: 1.3rem;
         color: #454545;
         margin: 0.2rem 0;
         padding: 1rem;
     }
-
     .info p {
         font-size: 1.2rem;
         margin: 0.2rem 0;
 
     }
-
     .containerPost {
         font-size: 2.8rem;
     }
 
-    footer p{
-        font-size: 1.5rem;
-    }
-
-    footer a{
-        font-size: 1.5rem;
-    }
 }

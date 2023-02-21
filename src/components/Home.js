@@ -203,6 +203,8 @@ export const Home = (onNavigate) => {
     menuBg.style.display = 'none';
   }
 
+  document.getElementById('footerHTML').style.display = 'none';
+
   divIconMenu.addEventListener('click', showMenu);
   menuBg.addEventListener('click', hideMenu);
 
